@@ -9,18 +9,18 @@ import PageScrollService from "@/services/page-scroll.service";
 export default function Home() {
     const sectionName = 'section';
 
-    useEffect(() => {
-        let pageScrollService:PageScrollService | null = new PageScrollService(sectionName, sections.length)
-
-        return () => {
-            pageScrollService?.destroy();
-            pageScrollService = null;
-        };
-    }, []);
+    // useEffect(() => {
+    //     let pageScrollService:PageScrollService | null = new PageScrollService(sectionName, sections.length)
+    //
+    //     return () => {
+    //         pageScrollService?.destroy();
+    //         pageScrollService = null;
+    //     };
+    // }, []);
 
     const sections:PageSectionProps[] = [
         {children:<LandingCarousel className={'w-full h-full'}/>},
-        {children:<LandingCarousel className={'w-full h-full'}/>},
+        {children:<div>TestTestTestTestTestTestTestTestTestTestTestTestTestTest TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest TestTestTestTestTestTestTestTestTestTestTestTestTestTest TestTestTestTestTestTestTestTestTestTest</div>},
         {children:<LandingCarousel className={'w-full h-full'}/>},
         {children:<LandingCarousel className={'w-full h-full'}/>},
     ];

@@ -5,7 +5,7 @@ import DesktopMenu from "@/components/common/menu/components/desktop-menu/deskto
 
 export default function Menu() {
     const isDesktop = useMediaQuery("(min-width: 768px)");
-    return <div className={'fixed top-0 left-0 w-full'}>
+    return <div className={'fixed top-0 left-0 z-50 w-full bg-background'}>
         {isDesktop === false && (<MobileMenu/>)}
         {isDesktop === true && (<DesktopMenu/>)}
     </div>;

@@ -81,7 +81,7 @@
     }
 
     .page-section{
-      min-height:100vh;
       padding-top:var(--menu-height);
+      height:100vh;
     }
   }

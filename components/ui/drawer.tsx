@@ -4,7 +4,7 @@ import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 import { cn } from "@/lib/utils"
 import { X } from "lucide-react"
-import Button from "@/components/common/button/button";
+import MenuButton from "@/components/common/button/menu-button";
 
 
 const DrawerContext = React.createContext<{
@@ -64,9 +64,9 @@ const DrawerContent = React.forwardRef<
       )}
       <div className={'flex flex-row justify-end p-4'}>
         <DrawerClose>
-          <Button isActive={true}>
+          <MenuButton isActive={true}>
             <X />
-          </Button>
+          </MenuButton>
         </DrawerClose>
       </div>
 

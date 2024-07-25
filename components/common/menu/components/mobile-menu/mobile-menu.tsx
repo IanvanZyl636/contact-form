@@ -1,7 +1,7 @@
 import {Drawer, DrawerContent, DrawerTrigger} from "@/components/ui/drawer";
 import {ChevronDown, MenuIcon} from "lucide-react";
 import MenuLogo from "@/components/common/menu/components/menu-logo/menu-logo";
-import Button, {ButtonStyle} from "@/components/common/button/button";
+import MenuButton, {MenuButtonStyle} from "@/components/common/button/menu-button";
 import Link from "next/link";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import * as React from "react";
@@ -19,9 +19,9 @@ export default function MobileMenu() {
             <div className={'flex-grow flex flex-row align-middle justify-end'}>
                 <Drawer direction={'right'}>
                     <DrawerTrigger>
-                        <Button isActive={true}>
+                        <MenuButton isActive={true}>
                             <MenuIcon/>
-                        </Button>
+                        </MenuButton>
                     </DrawerTrigger>
                     <DrawerContent>
                         <NavigationMenuPrimitive.Root orientation={'vertical'} className={'pl-4 pr-4 pb-4'}>

@@ -3,7 +3,7 @@ import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import { cva } from "class-variance-authority"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
-import {ButtonStyle} from "@/components/common/button/button";
+import {MenuButtonStyle} from "@/components/common/button/menu-button";
 
 interface NavigationMenuExtendedProps extends React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root> {
     logo: JSX.Element; // Add your new prop here
@@ -21,7 +21,7 @@ const NavigationMenu = React.forwardRef<
     )}
     {...props}
   >
-      <div className={'wrapper-container-fluid relative mx-auto flex flex-1 items-center'}>
+      <div className={'container relative mx-auto flex flex-1 items-center'}>
           {props.logo}
       <div className={'flex-grow flex flex-row items-center justify-end'}>
         {children}
@@ -60,7 +60,7 @@ const NavigationMenuItem =  React.forwardRef<
 ));
 
 const navigationMenuTriggerStyle = (radius:string = 'rounded-md') => cva(
-  cn(ButtonStyle(radius),"data-[active]:bg-accent/50 data-[state=open]:bg-accent/50")
+  cn(MenuButtonStyle(radius),"data-[active]:bg-accent/50 data-[state=open]:bg-accent/50")
 )();
 
 const NavigationMenuTrigger = React.forwardRef<

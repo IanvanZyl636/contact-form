@@ -3,8 +3,7 @@
 import Menu from "@/components/common/menu/menu";
 import PageSection, {PageSectionProps} from "@/components/common/page-section/page-section";
 import {LandingCarousel} from "@/components/common/carousel/landing-carousel";
-import {useEffect} from "react";
-import PageScrollService from "@/services/page-scroll.service";
+import WhatWeOfferGrid from "@/components/blocks/what-we-offer-grid";
 
 export default function Home() {
     const sectionName = 'section';
@@ -19,8 +18,7 @@ export default function Home() {
     // }, []);
 
     const sections:PageSectionProps[] = [
-        {children:<LandingCarousel className={'w-full h-full'}/>},
-        {children:<div>TestTestTestTestTestTestTestTestTestTestTestTestTestTest TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest TestTestTestTestTestTestTestTestTestTestTestTestTestTest TestTestTestTestTestTestTestTestTestTest</div>},
+        {heading:'What we offer', className:'container py-8', children:<WhatWeOfferGrid/>},
         {children:<LandingCarousel className={'w-full h-full'}/>},
         {children:<LandingCarousel className={'w-full h-full'}/>},
     ];

@@ -4,6 +4,7 @@
 
   @layer base {
     :root {
+      --whatsapp:142, 70%, 49%;
       --menu-height:76px;
       --background: 0 0% 100%;
       --foreground: 0 0% 3.9%;
@@ -33,6 +34,7 @@
     }
 
     .dark {
+      --whatsapp:142, 70%, 49%;
       --background: 0 0% 3.9%;
       --foreground: 0 0% 98%;
       --card: 0 0% 3.9%;
@@ -94,5 +96,9 @@
       min-block-size: calc(100vh - var(--menu-height));
       overflow: hidden;
       position:relative;
+    }
+
+    .bg-whatsapp{
+      background-color:hsl(var(--whatsapp));
     }
   }

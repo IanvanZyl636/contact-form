@@ -4,6 +4,7 @@ import Menu from "@/components/common/menu/menu";
 import PageSection, {PageSectionProps} from "@/components/common/page-section/page-section";
 import {LandingCarousel} from "@/components/common/carousel/landing-carousel";
 import WhatWeOfferGrid from "@/components/blocks/what-we-offer-grid";
+import Toolbar from "@/components/blocks/toolbar";
 
 export default function Home() {
     const sectionName = 'section';
@@ -17,19 +18,21 @@ export default function Home() {
     //     };
     // }, []);
 
-    const sections:PageSectionProps[] = [
-        {heading:'What we offer', className:'container py-8', children:<WhatWeOfferGrid/>},
-        {children:<LandingCarousel className={'w-full h-full'}/>},
-        {children:<LandingCarousel className={'w-full h-full'}/>},
+    const sections: PageSectionProps[] = [
+        {heading: 'What we offer', className: 'container py-8', children: <WhatWeOfferGrid/>},
+        {children: <LandingCarousel className={'w-full h-full'}/>},
+        {children: <LandingCarousel className={'w-full h-full'}/>},
+
     ];
 
     return (<>
             <Menu/>
-            {sections.map((section, i) =>{
+            {sections.map((section, i) => {
                 const sectionId = `${sectionName}${i}`;
 
                 return (<PageSection key={i} id={sectionId} {...section}></PageSection>)
             })}
+            <Toolbar/>
         </>
     );
 }

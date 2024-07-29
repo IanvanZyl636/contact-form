@@ -12,8 +12,8 @@
       --card-foreground: 0 0% 3.9%;
       --popover: 0 0% 100%;
       --popover-foreground: 0 0% 3.9%;
-      --primary: 0 0% 9%;
-      --primary-foreground: 0 0% 98%;
+      --primary: 260, 73%, 14%;
+      --primary-foreground: 0 0% 100%;
       --secondary: 0 0% 96.1%;
       --secondary-foreground: 0 0% 9%;
       --muted: 0 0% 96.1%;
@@ -22,6 +22,9 @@
       --accent-foreground: 0 0% 9%;
       --destructive: 0 84.2% 60.2%;
       --destructive-foreground: 0 0% 98%;
+      --menu:260, 73%, 14%;
+      --menu-foreground:0 0% 100%;
+      --menu-border:8, 100%, 59%, 0;
       --border: 0 0% 89.8%;
       --input: 0 0% 89.8%;
       --ring: 0 0% 3.9%;
@@ -35,14 +38,15 @@
 
     .dark {
       --whatsapp:142, 70%, 49%;
+      --menu-height:75px;
       --background: 0 0% 3.9%;
       --foreground: 0 0% 98%;
       --card: 0 0% 3.9%;
       --card-foreground: 0 0% 98%;
       --popover: 0 0% 3.9%;
       --popover-foreground: 0 0% 98%;
-      --primary: 0 0% 98%;
-      --primary-foreground: 0 0% 9%;
+      --primary: 260, 73%, 14%;
+      --primary-foreground: 0 0% 100%;
       --secondary: 0 0% 14.9%;
       --secondary-foreground: 0 0% 98%;
       --muted: 0 0% 14.9%;
@@ -51,6 +55,9 @@
       --accent-foreground: 0 0% 98%;
       --destructive: 0 62.8% 30.6%;
       --destructive-foreground: 0 0% 98%;
+      --menu:260, 73%, 14%;
+      --menu-foreground:0 0% 100%;
+      --menu-border:260, 73%, 14%;
       --border: 0 0% 14.9%;
       --input: 0 0% 14.9%;
       --ring: 0 0% 83.1%;
@@ -86,6 +93,10 @@
       height:var(--menu-height);
     }
 
+    .menu-logo-height{
+      height:calc(var(--menu-height) - 1px);
+    }
+
     .page-section-anchor{
       top:calc(-1 * var(--menu-height));
       position: absolute;
@@ -99,6 +110,7 @@
     }
 
     .bg-whatsapp{
-      background-color:hsl(var(--whatsapp));
+      --tw-bg-opacity: 1;
+      background-color:hsl(var(--whatsapp), var(--tw-bg-opacity));
     }
   }

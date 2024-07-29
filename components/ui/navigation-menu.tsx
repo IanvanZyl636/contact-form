@@ -1,11 +1,10 @@
 import * as React from "react"
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import {cva} from "class-variance-authority"
-import {ChevronDown, MessageSquareText} from "lucide-react"
+import {ChevronDown} from "lucide-react"
 import {cn} from "@/lib/utils"
 import {MenuButtonStyle} from "@/components/common/button/menu-button";
-import {Button} from "@/components/ui/button";
-import Whatsapp from "@/components/common/icons/whatsapp";
+import ContactUsMenu from "@/components/common/menu/components/contact-us-menu/contact-us-menu";
 
 interface NavigationMenuExtendedProps extends React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root> {
     logo: JSX.Element; // Add your new prop here
@@ -18,31 +17,20 @@ const NavigationMenu = React.forwardRef<
     <NavigationMenuPrimitive.Root
         ref={ref}
         className={cn(
-            "z-50 bg-background  w-full",
+            "z-50 bg-menu w-full",
             className
         )}
         {...props}
     >
         <div className={'container relative mx-auto '}>
-            <div className={'w-full inline-grid grid-rows-1 grid-cols-[1fr_auto_1fr]'}>
-                <div className={'justify-self-start self-center'}>
+            <div className={'w-full flex flex-row justify-center items-center'}>
+                <div>
                     {props.logo}
                 </div>
-                <div className={'flex flex-row self-center justify-self-center'}>
+                <div className={'flex flex-row justify-center items-center grow'}>
                     {children}
                 </div>
-                <div className={'justify-self-end self-center'}>
-                    <Button size={'custom'} variant={'custom'} className={'rounded-full mr-2 bg-whatsapp text-primary-foreground bg-opacity-20'}>
-                        <div className={'p-2'}>
-                            <Whatsapp className={'h-6 w-6'}/>
-                        </div>
-                    </Button>
-                    <Button size={'custom'} className={'rounded-full'}>
-                        <div className={'p-2'}>
-                            <MessageSquareText className={'h-6 w-6'}/>
-                        </div>
-                    </Button>
-                </div>
+                <ContactUsMenu/>
             </div>
         </div>
     </NavigationMenuPrimitive.Root>
@@ -77,8 +65,8 @@ const NavigationMenuItem = React.forwardRef<
     </NavigationMenuPrimitive.Item>
 ));
 
-const navigationMenuTriggerStyle = (radius: string = 'rounded-md') => cva(
-    cn(MenuButtonStyle(radius), "data-[active]:bg-accent/50 data-[state=open]:bg-accent/50")
+const navigationMenuTriggerStyle = (radius: string = 'rounded-md', className:string = 'bg-menu text-center text-menu-foreground data-[active]:bg-accent data-[state=open]:bg-accent data-[state=open]:text-accent-foreground data-[active]:text-accent-foreground') => cva(
+    cn(MenuButtonStyle(radius), className)
 )();
 
 const NavigationMenuTrigger = React.forwardRef<
@@ -107,7 +95,7 @@ const NavigationMenuContent = React.forwardRef<
         ref={ref}
         className={cn(
             "left-0 top-[110%] bo data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto",
-            "rounded-md border bg-popover text-popover-foreground shadow",
+            "rounded-md bg-menu text-menu-foreground shadow",
             className
         )}
         {...props}

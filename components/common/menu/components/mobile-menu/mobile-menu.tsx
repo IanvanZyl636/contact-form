@@ -1,24 +1,30 @@
 import {Drawer, DrawerContent, DrawerTrigger} from "@/components/ui/drawer";
 import {ChevronDown, MenuIcon} from "lucide-react";
-import MenuLogo from "@/components/common/menu/components/menu-logo/menu-logo";
-import MenuButton, {MenuButtonStyle} from "@/components/common/button/menu-button";
+import DesktopMenuLogo from "@/components/common/menu/components/menu-logo/desktop-menu-logo";
+import MenuButton from "@/components/common/button/menu-button";
 import Link from "next/link";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import * as React from "react";
 import {navigationMenuTriggerStyle} from "@/components/ui/navigation-menu";
 import {cn} from "@/lib/utils";
+import ContactUsMenu from "@/components/common/menu/components/contact-us-menu/contact-us-menu";
+import MobileMenuLogo from "@/components/common/menu/components/menu-logo/mobile-menu-logo";
 
-export default function MobileMenu() {
+export default function MobileMenu({className}:{className?: string}) {
     const menuButtonClass = (radius:string = 'rounded-md') => cn(navigationMenuTriggerStyle(radius), 'justify-center w-full');
 
-    return <div className={'wrapper-container-fluid mx-auto'}>
-        <div className={'flex flex-row'}>
-            <Link href="/" passHref>
-                <MenuLogo/>
-            </Link>
-            <div className={'flex-grow flex flex-row align-middle justify-end'}>
+    return <div className={cn(className,'wrapper-container-fluid mx-auto bg-menu text-menu-foreground')}>
+        <div className={'w-full flex flex-row items-center'}>
+            <div>
+                <Link href="/" passHref>
+                    <DesktopMenuLogo className={'hidden sm:block'}/>
+                    <MobileMenuLogo className={'sm:hidden block'}/>
+                </Link>
+            </div>
+            <div className={'grow flex flex-row align-middle justify-end'}>
+                <ContactUsMenu/>
                 <Drawer direction={'right'}>
-                    <DrawerTrigger>
+                    <DrawerTrigger className={'ml-2'}>
                         <MenuButton isActive={true}>
                             <MenuIcon/>
                         </MenuButton>
@@ -41,7 +47,8 @@ export default function MobileMenu() {
                                             aria-hidden="true"
                                         />
                                     </NavigationMenuPrimitive.Trigger>
-                                    <NavigationMenuPrimitive.Content className={"border-l-2 bg-popover text-popover-foreground"}>
+                                    <NavigationMenuPrimitive.Content
+                                        className={"border-l-2 bg-menu text-menu-foreground"}>
                                         <Link href="/" legacyBehavior passHref>
                                             <NavigationMenuPrimitive.Link className={menuButtonClass('rounded-r-md')}>
                                                 Accounting

@@ -6,10 +6,11 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import {cn} from "@/lib/utils";
-import MenuLogo from "@/components/common/menu/components/menu-logo/menu-logo";
+import DesktopMenuLogo from "@/components/common/menu/components/menu-logo/desktop-menu-logo";
 
-export default function DesktopMenu() {
-    return <NavigationMenu logo={<Link href="/" passHref><MenuLogo/></Link>}>
+export default function DesktopMenu({className}: {className?: string}) {
+
+    return <NavigationMenu className={className} logo={<Link href="/" passHref><DesktopMenuLogo/></Link>}>
         <NavigationMenuList>
             <NavigationMenuItem>
                 <Link href="/" legacyBehavior passHref>
@@ -23,12 +24,12 @@ export default function DesktopMenu() {
                     Services
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                    <Link href="/docs" legacyBehavior passHref>
+                    <Link href="/" legacyBehavior passHref>
                         <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>
                             Accounting
                         </NavigationMenuLink>
                     </Link>
-                    <Link href="/docs" legacyBehavior passHref>
+                    <Link href="/" legacyBehavior passHref>
                         <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full text-nowrap')}>
                             Register a Company
                         </NavigationMenuLink>

@@ -52,7 +52,7 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
         ref={ref}
         className={cn(
-            "fixed z-50 flex h-auto flex-col rounded-t-[10px] border bg-background",
+            "fixed z-50 flex h-auto flex-col rounded-t-[10px] bg-menu text-menu-foreground",
             (!direction || direction === "bottom") && "insex-x-0 bottom-0 mt-24",
             direction === "right" && "top-0 right-0 w-screen max-w-80 h-full",
             className
@@ -62,7 +62,7 @@ const DrawerContent = React.forwardRef<
       {!direction || direction === "bottom" && (
           <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted"/>
       )}
-      <div className={'flex flex-row justify-end p-4'}>
+      <div className={'wrapper-container-fluid flex flex-row justify-end align-middle menu-height'}>
         <DrawerClose>
           <MenuButton isActive={true}>
             <X />

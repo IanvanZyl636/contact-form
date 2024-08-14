@@ -2,17 +2,16 @@
 
 import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
-
 import { cn } from "@/lib/utils"
-import H2 from "@/components/ui/typography/h2";
-import {VisuallyHidden} from "@radix-ui/react-visually-hidden";
-import TextMuted from "@/components/ui/typography/text-muted";
+import { X } from "lucide-react"
+import MenuButton from "@/components/common/button/menu-button";
+
 
 const DrawerContext = React.createContext<{
   direction?: "top" | "bottom" | "left" | "right"
 }>({})
 
-const Drawer = ({
+const Drawerasd = ({
   shouldScaleBackground = true,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
@@ -23,7 +22,7 @@ const Drawer = ({
       />
     </DrawerContext.Provider>
 )
-Drawer.displayName = "Drawer"
+Drawerasd.displayName = "Drawer"
 
 const DrawerTrigger = DrawerPrimitive.Trigger
 
@@ -48,34 +47,43 @@ const DrawerContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
   const {direction} = React.useContext(DrawerContext);
-
-  return (<DrawerPortal>
+  return <DrawerPortal>
     <DrawerOverlay />
     <DrawerPrimitive.Content
-      ref={ref}
-      className={cn(
-        "fixed z-50 flex h-auto flex-col rounded-t-[10px]",
-          (!direction || direction === "bottom") && "bottom-0 w-full",
-          direction === "right" && "top-0 right-0 w-screen max-w-80 h-full",
-        className
-      )}
-      {...props}
+        ref={ref}
+        className={cn(
+            "fixed z-50 flex h-auto flex-col rounded-t-[10px] bg-menu text-menu-foreground",
+            (!direction || direction === "bottom") && "insex-x-0 bottom-0 mt-24",
+            direction === "right" && "top-0 right-0 w-screen max-w-80 h-full",
+            className
+        )}
+        {...props}
     >
       {!direction || direction === "bottom" && (
           <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted"/>
       )}
+      <div className={'wrapper-container-fluid flex flex-row justify-end align-middle menu-height'}>
+        <DrawerClose>
+          <MenuButton isActive={true}>
+            <X />
+          </MenuButton>
+        </DrawerClose>
+      </div>
+
+
       {children}
     </DrawerPrimitive.Content>
-  </DrawerPortal>)}
-)
-DrawerContent.displayName = "DrawerContent";
+  </DrawerPortal>
+})
+
+DrawerContent.displayName = "DrawerContent"
 
 const DrawerHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn("flex flex-col", className)}
+    className={cn("grid gap-1.5 p-4 text-center sm:text-left", className)}
     {...props}
   />
 )
@@ -96,41 +104,31 @@ const DrawerTitle = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
 >(({ className, ...props }, ref) => (
-    <>
-      <VisuallyHidden>
-        <DrawerPrimitive.Title
-            ref={ref}
-            className={cn(
-                "text-lg font-semibold leading-none tracking-tight",
-                className
-            )}
-            {...props}
-        />
-      </VisuallyHidden>
-      <H2 className={className} {...props}/>
-    </>
+  <DrawerPrimitive.Title
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
 ))
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName
 
 const DrawerDescription = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
->(({className, ...props}, ref) => (
-    <>
-      <VisuallyHidden>
-        <DrawerPrimitive.Description
-            ref={ref}
-            className={cn("text-sm text-muted-foreground", className)}
-            {...props}
-        />
-      </VisuallyHidden>
-      <TextMuted className={className} {...props}/>
-    </>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
 ))
 DrawerDescription.displayName = DrawerPrimitive.Description.displayName
 
 export {
-  Drawer,
+  Drawerasd,
   DrawerPortal,
   DrawerOverlay,
   DrawerTrigger,

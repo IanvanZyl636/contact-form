@@ -1,15 +1,28 @@
+'use client'
+
 import {cn} from "@/lib/utils";
-import {ReactNode} from "react";
+import {CSSProperties, ReactNode, useRef} from "react";
+import StickyBannerImage from "@/components/common/image/sticky-banner-image";
+import {ImageProps} from "next/image";
 
 export interface PageSectionProps {
     children?: ReactNode,
     className?: string,
-    id?: string
+    id?: string,
+    style?: CSSProperties | undefined,
+    stickyBackground?: ImageProps,
 }
 
-export default function PageSection({children, className, id}: PageSectionProps) {
-    return <div className={cn('page-section', className)}>
-        <div id={id} className={'page-section-anchor'}></div>
-        {children}
-    </div>
+export default function PageSection({children, className, id, style, stickyBackground}: PageSectionProps) {
+    const sectionContainerRef = useRef<HTMLDivElement>(null);
+
+    return <>
+        {stickyBackground && <StickyBannerImage containerRef={sectionContainerRef} image={stickyBackground}/>}
+        <div ref={sectionContainerRef} className={cn('page-section', className, !stickyBackground && 'bg-background')} style={style}>
+            <div id={id} className={'page-section-anchor'}></div>
+            {children}
+        </div>
+    </>
 }
+
+

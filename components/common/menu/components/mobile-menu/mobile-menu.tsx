@@ -1,5 +1,5 @@
-import {Drawer, DrawerContent, DrawerTrigger} from "@/components/ui/drawer";
-import {ChevronDown, MenuIcon} from "lucide-react";
+import {Drawer, DrawerClose, DrawerContent, DrawerTrigger} from "@/components/ui/drawer";
+import {ChevronDown, MenuIcon, X} from "lucide-react";
 import DesktopMenuLogo from "@/components/common/menu/components/menu-logo/desktop-menu-logo";
 import MenuButton from "@/components/common/button/menu-button";
 import Link from "next/link";
@@ -29,7 +29,14 @@ export default function MobileMenu({className}:{className?: string}) {
                             <MenuIcon/>
                         </MenuButton>
                     </DrawerTrigger>
-                    <DrawerContent>
+                    <DrawerContent className={'bg-menu text-menu-foreground'}>
+                        <div className={'wrapper-container-fluid flex flex-row justify-end align-middle menu-height'}>
+                            <DrawerClose>
+                                <MenuButton className={'p-2'}>
+                                    <X/>
+                                </MenuButton>
+                            </DrawerClose>
+                        </div>
                         <NavigationMenuPrimitive.Root orientation={'vertical'} className={'pl-4 pr-4 pb-4'}>
                             <NavigationMenuPrimitive.List className={'list-none'}>
                                 <NavigationMenuPrimitive.Item>

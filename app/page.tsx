@@ -1,11 +1,13 @@
-"use client"
-
 import Menu from "@/components/common/menu/menu";
 import PageSection, {PageSectionProps} from "@/components/common/page-section/page-section";
-import {LandingCarousel} from "@/components/common/carousel/landing-carousel";
 import WhatWeOfferGrid from "@/components/blocks/what-we-offer-grid";
 import Toolbar from "@/components/blocks/toolbar";
 import Hero from "@/components/blocks/hero";
+import background from '@/public/space-hero.png';
+import ContactForm from "@/components/blocks/contact-form";
+import LastPassFix from "@/components/blocks/last-pass-fix";
+import {ContactDrawerDialog} from "@/components/blocks/contact-drawer-dialog";
+// import ContactForm from "@/components/blocks/contact-form";
 
 export default function Home() {
     const sectionName = 'section';
@@ -20,22 +22,25 @@ export default function Home() {
     // }, []);
 
     const sections: PageSectionProps[] = [
-        {children: <Hero/>},
+        {children: <Hero/>, stickyBackground: {alt: "hero-section-background", src: background}},
         {children: <WhatWeOfferGrid/>},
-        {children: <LandingCarousel className={'w-full h-full'}/>},
-        {children: <LandingCarousel className={'w-full h-full'}/>},
-
+        {
+            children: <div className={'container'}>
+                <ContactForm/>
+            </div>
+        },
     ];
 
-    return (<>
+    return (
+        <LastPassFix>
             <Menu/>
             {sections.map((section, i) => {
                 const sectionId = `${sectionName}${i}`;
 
                 return (<PageSection key={i} id={sectionId} {...section}></PageSection>)
             })}
-            <Toolbar/>
-        </>
+            <ContactDrawerDialog/>
+        </LastPassFix>
     );
 }
 

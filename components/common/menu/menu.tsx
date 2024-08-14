@@ -7,7 +7,7 @@ export default function Menu() {
     const isDesktop = useMediaQuery("(min-width: 980px)");
     return <>
         <div className={'menu-height'}></div>
-        <div className={'fixed top-0 left-0 z-50 w-full menu-height border-menu-border border-b'}>
+        <div className={'fixed top-0 left-0 z-50 w-full menu-height border-menu-border'}>
             {isDesktop === false && (<MobileMenu/>)}
             {isDesktop === true && (<DesktopMenu/>)}
         </div>

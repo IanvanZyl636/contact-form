@@ -113,8 +113,11 @@ export default function ContactForm() {
                         </form>
                         <Button type={'submit'}>Call me back</Button>
                         <Separator orientation={'horizontal'}/>
-                        <TextParagraph className={'text-center font-semibold'}>Or you can call us on <a
-                            href={`tel:${phoneNumber}`}><b className={'text-primary'}>{displayPhoneNumber}</b></a></TextParagraph>
+                        <TextParagraph className={'text-center'}>Or you can call us on
+                            <a href={`tel:${phoneNumber}`}>
+                                <b className={'text-primary'}> {displayPhoneNumber}</b>
+                            </a>
+                        </TextParagraph>
                     </>
                 )
             }

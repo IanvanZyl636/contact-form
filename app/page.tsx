@@ -10,11 +10,7 @@ export default function Home() {
     const sections: PageSectionProps[] = [
         {children: <Hero/>, stickyBackground: {alt: "hero-section-background", src: background}},
         {children: <WhatWeOfferGrid/>},
-        {
-            children: <div className={'container'}>
-                <ContactForm/>
-            </div>
-        },
+        {children: <div className={'container'}><ContactForm/></div>},
     ];
 
     return (

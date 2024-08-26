@@ -8,12 +8,16 @@ enum PropertyType {
     industrialProperty,
 }
 
-// house = 'House',
-//     apartmentOrFlat = 'Apartment / Flat',
-//     townhouse = 'TownHouse',
-//     vacantLandOrPlot = 'Vacant Land / Plot',
-//     farm = 'Farm',
-//     commercialProperty = 'Commercial Property',
-//     industrialProperty = 'Industrial Property',
+const PropertyTypeItem: { [key in PropertyType]: string } = {
+    [PropertyType.house]: 'House',
+    [PropertyType.apartmentOrFlat]: 'Apartment / Flat',
+    [PropertyType.townhouse]: 'TownHouse',
+    [PropertyType.vacantLandOrPlot]: 'Vacant Land / Plot',
+    [PropertyType.farm]: 'Farm',
+    [PropertyType.commercialProperty]: 'Commercial Property',
+    [PropertyType.industrialProperty]: 'Industrial Property',
+};
 
 export default PropertyType;
+
+export {PropertyTypeItem}

@@ -1,33 +1,33 @@
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {useEffect} from "react";
 
-export default function PriceFilter({label = 'Price', onValueChange, value}:{label?:string, onValueChange?(value: string | undefined): void, value?: string | undefined}){
+export default function AmountFilter({label = 'Amount', onValueChange, value}:{label?:string, onValueChange?(value: string | undefined): void, value?: string | undefined}){
     const defaultValue = "any";
 
     useEffect(()=> {
-        (!value && onValueChange) ? onValueChange(defaultValue) : null;
-    }
-    ,[defaultValue]);
+            (!value && onValueChange) ? onValueChange(defaultValue) : null;
+        }
+        ,[defaultValue]);
 
-        const prices = [
-            "100",
-            "200",
-            "300",
-            "400",
-            "500"
-        ]
+    const amounts:string[]=[
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+    ]
 
-        return (
-            <>
+    return (
+        <>
             <Select  onValueChange={onValueChange} value={value}>
                 <SelectTrigger className="w-full">
                     <SelectValue noSelectionValue={'any'}  currentValue={value} label={label} />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value={defaultValue}>Any</SelectItem>
-                    {prices.map((price,index) => (<SelectItem key={index} value={price}>R {price}</SelectItem>))}
+                    {amounts.map((amount,index) => (<SelectItem key={index} value={amount}>{amount}+</SelectItem>))}
                 </SelectContent>
             </Select>
-            </>
-        )
+        </>
+    )
 }

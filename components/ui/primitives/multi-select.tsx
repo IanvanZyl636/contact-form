@@ -26,6 +26,7 @@ import { hideOthers } from 'aria-hidden';
 import { RemoveScroll } from 'react-remove-scroll';
 
 import type { Scope } from '@radix-ui/react-context';
+import TextMuted from "@/components/ui/typography/text-muted";
 
 type Direction = 'ltr' | 'rtl';
 
@@ -59,8 +60,8 @@ type MultiSelectContextValue = {
     valueNodeHasChildren: boolean;
     onValueNodeHasChildrenChange(hasChildren: boolean): void;
     contentId: string;
-    value?: string;
-    onValueChange(value: string): void;
+    value?: string[];
+    onValueChange(value: string[]): void;
     open: boolean;
     required?: boolean;
     onOpenChange(open: boolean): void;
@@ -82,9 +83,9 @@ const [MultiSelectNativeOptionsProvider, useMultiSelectNativeOptionsContext] =
 
 interface MultiSelectProps {
     children?: React.ReactNode;
-    value?: string;
-    defaultValue?: string;
-    onValueChange?(value: string): void;
+    value?: string[];
+    defaultValue?: string[];
+    onValueChange?(value: string[]): void;
     open?: boolean;
     defaultOpen?: boolean;
     onOpenChange?(open: boolean): void;
@@ -141,6 +142,17 @@ const MultiSelect: React.FC<MultiSelectProps> = (props: ScopedProps<MultiSelectP
         .map((option) => option.props.value)
         .join(';');
 
+    const handleSelect = (selectedItem:string) => {
+        const currentValues = value ?? [];
+
+        if (currentValues.includes(selectedItem)) {
+            setValue(currentValues.filter((value) => value !== selectedItem));
+            return;
+        }
+
+        setValue([...currentValues, selectedItem]);
+    };
+
     return (
         <PopperPrimitive.Root {...popperScope}>
             <MultiSelectProvider
@@ -189,7 +201,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props: ScopedProps<MultiSelectP
                         autoComplete={autoComplete}
                         value={value}
                         // enable form autofill
-                        onChange={(event) => setValue(event.target.value)}
+                        onChange={(event) => handleSelect(event.target.value)}
                         disabled={disabled}
                     >
                         {value === undefined ? <option value="" /> : null}
@@ -225,10 +237,17 @@ const MultiSelectTrigger = React.forwardRef<MultiSelectTriggerElement, MultiSele
 
         const [searchRef, handleTypeaheadSearch, resetTypeahead] = useTypeaheadSearch((search) => {
             const enabledItems = getItems().filter((item) => !item.disabled);
-            const currentItem = enabledItems.find((item) => item.value === context.value);
-            const nextItem = findNextItem(enabledItems, search, currentItem);
+            const nextItem = findNextItem(enabledItems, search);
             if (nextItem !== undefined) {
-                context.onValueChange(nextItem.value);
+                const currentValues = context.value ?? [];
+                const selectedItem = nextItem.value;
+
+                if (currentValues.includes(selectedItem)) {
+                    context.onValueChange(currentValues.filter((value) => value !== selectedItem));
+                    return;
+                }
+
+                context.onValueChange([...currentValues, selectedItem]);
             }
         });
 
@@ -324,14 +343,15 @@ type MultiSelectValueElement = React.ElementRef<typeof Primitive.span>;
 type PrimitiveSpanProps = React.ComponentPropsWithoutRef<typeof Primitive.span>;
 interface MultiSelectValueProps extends Omit<PrimitiveSpanProps, 'placeholder'> {
     placeholder?: React.ReactNode;
+    label:string;
 }
 
 const MultiSelectValue = React.forwardRef<MultiSelectValueElement, MultiSelectValueProps>(
     (props: ScopedProps<MultiSelectValueProps>, forwardedRef) => {
         // We ignore `className` and `style` as this part shouldn't be styled.
-        const { __scopeSelect, className, style, children, placeholder = '', ...valueProps } = props;
+        const {__scopeSelect, className, style, children, placeholder = '', label, ...valueProps} = props;
         const context = useMultiSelectContext(VALUE_NAME, __scopeSelect);
-        const { onValueNodeHasChildrenChange } = context;
+        const {onValueNodeHasChildrenChange} = context;
         const hasChildren = children !== undefined;
         const composedRefs = useComposedRefs(forwardedRef, context.onValueNodeChange);
 
@@ -340,16 +360,30 @@ const MultiSelectValue = React.forwardRef<MultiSelectValueElement, MultiSelectVa
         }, [onValueNodeHasChildrenChange, hasChildren]);
 
         return (
-            <Primitive.span
-                {...valueProps}
-                ref={composedRefs}
-                // we don't want events from the portalled `SelectValue` children to bubble
-                // through the item they came from
-                style={{ pointerEvents: 'none' }}
-            >
-                {shouldShowPlaceholder(context.value) ? <>{placeholder}</> : children}
-            </Primitive.span>
-        );
+            <>
+                {context.value && context.value.length > 0 ?
+                    <div className={'flex flex-col justify-start align-top text-start'}>
+                        <TextMuted className={'text-xs'}>{label}</TextMuted>
+                        {context.value && context.value?.length > 1
+                            ?
+                            <>{context.value?.length} Selected</>
+                            :
+                            <Primitive.span
+                                {...valueProps}
+                                ref={composedRefs}
+                                // we don't want events from the portalled `SelectValue` children to bubble
+                                // through the item they came from
+                                style={{pointerEvents: 'none'}}
+                            >
+                                {shouldShowPlaceholder(context.value) ? <>{placeholder}</> : null}
+                            </Primitive.span>
+                        }
+                    </div>
+                    :
+                    <TextMuted>{label}</TextMuted>
+                }
+            </>
+        )
     }
 );
 
@@ -624,7 +658,7 @@ const MultiSelectContentImpl = React.forwardRef<MultiSelectContentImplElement, M
         const [searchRef, handleTypeaheadSearch] = useTypeaheadSearch((search) => {
             const enabledItems = getItems().filter((item) => !item.disabled);
             const currentItem = enabledItems.find((item) => item.ref.current === document.activeElement);
-            const nextItem = findNextItem(enabledItems, search, currentItem);
+            const nextItem = findNextItem(enabledItems, search);
             if (nextItem) {
                 /**
                  * Imperative focus during keydown is risky so we prevent React's batching updates
@@ -637,7 +671,7 @@ const MultiSelectContentImpl = React.forwardRef<MultiSelectContentImplElement, M
         const itemRefCallback = React.useCallback(
             (node: MultiSelectItemElement | null, value: string, disabled: boolean) => {
                 const isFirstValidItem = !firstValidItemFoundRef.current && !disabled;
-                const isSelectedItem = context.value !== undefined && context.value === value;
+                const isSelectedItem = context.value !== undefined && context.value !== null && context.value.length > 0 && context.value.includes(value);
                 if (isSelectedItem || isFirstValidItem) {
                     setSelectedItem(node);
                     if (isFirstValidItem) firstValidItemFoundRef.current = true;
@@ -649,7 +683,7 @@ const MultiSelectContentImpl = React.forwardRef<MultiSelectContentImplElement, M
         const itemTextRefCallback = React.useCallback(
             (node: MultiSelectItemTextElement | null, value: string, disabled: boolean) => {
                 const isFirstValidItem = !firstValidItemFoundRef.current && !disabled;
-                const isSelectedItem = context.value !== undefined && context.value === value;
+                const isSelectedItem = context.value !== undefined && context.value !== null && context.value.length > 0 && context.value.includes(value);
                 if (isSelectedItem || isFirstValidItem) {
                     setSelectedItemText(node);
                 }
@@ -1203,7 +1237,7 @@ const MultiSelectItem = React.forwardRef<MultiSelectItemElement, MultiSelectItem
         } = props;
         const context = useMultiSelectContext(ITEM_NAME, __scopeSelect);
         const contentContext = useMultiSelectContentContext(ITEM_NAME, __scopeSelect);
-        const isSelected = context.value === value;
+        const isSelected = context.value !== undefined && context.value !== null && context.value.length > 0 && context.value.includes(value);
         const [textValue, setTextValue] = React.useState(textValueProp ?? '');
         const [isFocused, setIsFocused] = React.useState(false);
         const composedRefs = useComposedRefs(forwardedRef, (node) =>
@@ -1214,8 +1248,15 @@ const MultiSelectItem = React.forwardRef<MultiSelectItemElement, MultiSelectItem
 
         const handleSelect = () => {
             if (!disabled) {
-                context.onValueChange(value);
-                context.onOpenChange(false);
+                const currentValues = context.value ?? [];
+                const selectedItem = value;
+
+                if (currentValues.includes(selectedItem)) {
+                    context.onValueChange(currentValues.filter((value) => value !== selectedItem));
+                    return;
+                }
+
+                context.onValueChange([...currentValues, selectedItem]);
             }
         };
 
@@ -1347,7 +1388,7 @@ const MultiSelectItemText = React.forwardRef<MultiSelectItemTextElement, MultiSe
 
                 {/* Portal the select item text into the trigger value node */}
                 {itemContext.isSelected && context.valueNode && !context.valueNodeHasChildren
-                    ? ReactDOM.createPortal(itemTextProps.children, context.valueNode)
+                    ? context.value && context.value.length > 1 ? null : ReactDOM.createPortal(itemTextProps.children, context.valueNode)
                     : null}
             </>
         );
@@ -1576,8 +1617,8 @@ MultiSelectArrow.displayName = ARROW_NAME;
 
 /* -----------------------------------------------------------------------------------------------*/
 
-function shouldShowPlaceholder(value?: string) {
-    return value === '' || value === undefined;
+function shouldShowPlaceholder(value?: string[]) {
+    return !value || value === undefined || value === null || value.length === 0;
 }
 
 const BubbleMultiSelect = React.forwardRef<HTMLSelectElement, React.ComponentPropsWithoutRef<'select'>>(
@@ -1676,19 +1717,14 @@ function useTypeaheadSearch(onSearchChange: (search: string) => void) {
  */
 function findNextItem<T extends { textValue: string }>(
     items: T[],
-    search: string,
-    currentItem?: T
+    search: string
 ) {
     const isRepeated = search.length > 1 && Array.from(search).every((char) => char === search[0]);
     const normalizedSearch = isRepeated ? search[0] : search;
-    const currentItemIndex = currentItem ? items.indexOf(currentItem) : -1;
-    let wrappedItems = wrapArray(items, Math.max(currentItemIndex, 0));
-    const excludeCurrentItem = normalizedSearch.length === 1;
-    if (excludeCurrentItem) wrappedItems = wrappedItems.filter((v) => v !== currentItem);
-    const nextItem = wrappedItems.find((item) =>
+    const nextItem = items.find((item) =>
         item.textValue.toLowerCase().startsWith(normalizedSearch.toLowerCase())
     );
-    return nextItem !== currentItem ? nextItem : undefined;
+    return nextItem;
 }
 
 /**

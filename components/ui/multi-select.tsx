@@ -17,27 +17,7 @@ interface MultiSelectValueProps extends React.ComponentPropsWithoutRef<typeof Mu
     noSelectionValue:string | undefined,
 }
 
-const MultiSelectValue = React.forwardRef<
-    HTMLDivElement,
-    MultiSelectValueProps
->(({className, children, label, noSelectionValue, currentValue, ...props}, ref) => {
-
-    return (
-        <div ref={ref}>
-            {
-                noSelectionValue !== currentValue ?
-                    (
-                        <div className={'flex flex-col justify-start align-top text-start'}>
-                            <TextMuted className={'text-xs'}>{label}</TextMuted>
-                            <MultiSelectPrimitive.Value {...props}/>
-                        </div>
-                    ) : (
-                        <TextMuted>{label}</TextMuted>
-                    )
-            }
-        </div>
-    )
-});
+const MultiSelectValue = MultiSelectPrimitive.Value;
 
 const MultiSelectTrigger = React.forwardRef<
     React.ElementRef<typeof MultiSelectPrimitive.Trigger>,

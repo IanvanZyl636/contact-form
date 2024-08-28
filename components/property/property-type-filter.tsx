@@ -1,8 +1,8 @@
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {useEffect} from "react";
-import {PropertyTypeItem} from "@/constants/property-type.constant";
 
-export default function PropertyTypeFilter({label = 'Property Type', onValueChange, value}:{label?:string, onValueChange?(value: string | undefined): void, value?: string | undefined}){
+import {useEffect} from "react";
+import {MultiSelect, MultiSelectContent, MultiSelectItem, MultiSelectTrigger, MultiSelectValue} from "@/components/ui/multi-select";
+
+export default function PropertyTypeFilter({label = 'Amount', onValueChange, value}:{label?:string, onValueChange?(value: string | undefined): void, value?: string | undefined}){
     const defaultValue = "any";
 
     useEffect(()=> {
@@ -10,19 +10,25 @@ export default function PropertyTypeFilter({label = 'Property Type', onValueChan
         }
         ,[defaultValue]);
 
-    const propertyTypes:Array<{label:string, value:string}> = Object.entries(PropertyTypeItem).map(propertyTypeItem => ({label:propertyTypeItem[1], value:propertyTypeItem[0]}));
+    const amounts:string[]=[
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+    ]
 
     return (
         <>
-            <Select onValueChange={onValueChange} value={value}>
-                <SelectTrigger className="w-full">
-                    <SelectValue noSelectionValue={'any'}  currentValue={value} label={label} />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value={defaultValue}>Any</SelectItem>
-                    {propertyTypes.map((propertyType,index) => (<SelectItem key={index} value={propertyType.value}>{propertyType.label}</SelectItem>))}
-                </SelectContent>
-            </Select>
+            <MultiSelect onValueChange={onValueChange} value={value}>
+                <MultiSelectTrigger className="w-full">
+                    <MultiSelectValue noSelectionValue={'any'}  currentValue={value} label={label} />
+                </MultiSelectTrigger>
+                <MultiSelectContent>
+                    <MultiSelectItem value={defaultValue}>Any</MultiSelectItem>
+                    {amounts.map((amount,index) => (<MultiSelectItem key={index} value={amount}>{amount}+</MultiSelectItem>))}
+                </MultiSelectContent>
+            </MultiSelect>
         </>
     )
 }

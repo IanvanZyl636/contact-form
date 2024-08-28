@@ -10,6 +10,7 @@ import * as React from "react";
 import AmountFilter from "@/components/property/amount-filter";
 import {Checkbox} from "@/components/ui/checkbox";
 import {CheckedState} from "@radix-ui/react-checkbox";
+import PropertyTypeFilter from "@/components/property/property-type-filter";
 
 interface SaleTypePageSearchParamsModel {
     minPrice?: string;
@@ -29,6 +30,7 @@ export default function SaleTypePage() {
     const searchParams: SaleTypePageSearchParamsModel = Object.fromEntries(useSearchParams().entries());
 
 
+    const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
     const [minPrice, setMinPrice] = useState<string | undefined>(searchParams.minPrice);
     const [maxPrice, setMaxPrice] = useState<string | undefined>(searchParams.maxPrice);
     const [bedroomAmount, setBedroomAmount] = useState<string | undefined>(searchParams.bedroomAmount);
@@ -47,6 +49,7 @@ export default function SaleTypePage() {
                 <H1> Available Property</H1>
                 <div className={'bg-secondary text-secondary-foreground rounded-md p-4 flex flex-col gap-4'}>
                     <div className={'flex flex-row gap-2'}>
+                        <PropertyTypeFilter label={'Property Type'} onValueChange={setGarageAmount} value={garageAmount}/>
                         <PriceFilter label={'Min price'} onValueChange={setMinPrice} value={minPrice}/>
                         <PriceFilter label={'Max price'} onValueChange={setMaxPrice} value={maxPrice}/>
                         <AmountFilter label={'Bedrooms'} onValueChange={setBedroomAmount} value={bedroomAmount}/>

@@ -19,7 +19,7 @@ export default function AmountFilter({label = 'Amount', onValueChange, value}:{l
 
     return (
         <>
-            <Select  onValueChange={onValueChange} value={value}>
+            <Select onValueChange={onValueChange} value={value}>
                 <SelectTrigger className="w-full">
                     <SelectValue noSelectionValue={'any'}  currentValue={value} label={label} />
                 </SelectTrigger>

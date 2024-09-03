@@ -12,9 +12,9 @@ const Select = SelectPrimitive.Root
 const SelectGroup = SelectPrimitive.Group
 
 interface SelectValueProps extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Value>{
-  label: string,
-  currentValue:string | undefined,
-  noSelectionValue:string | undefined,
+  label?: string,
+  currentValue?:string | undefined,
+  noSelectionValue?:string | undefined,
 }
 
 const SelectValue = React.forwardRef<
@@ -25,14 +25,16 @@ const SelectValue = React.forwardRef<
   return (
       <div ref={ref}>
         {
-          noSelectionValue !== currentValue ?
+          noSelectionValue && currentValue && noSelectionValue !== currentValue ?
             (
                 <div className={'flex flex-col justify-start align-top text-start'}>
                   <TextMuted className={'text-xs'}>{label}</TextMuted>
                   <SelectPrimitive.Value {...props}/>
                 </div>
-            ) : (
+            ) : noSelectionValue && currentValue ? (
                 <TextMuted>{label}</TextMuted>
+            ) : (
+                <SelectPrimitive.Value {...props}/>
             )
         }
       </div>

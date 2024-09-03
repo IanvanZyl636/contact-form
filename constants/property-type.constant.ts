@@ -8,7 +8,7 @@ enum PropertyType {
     industrialProperty,
 }
 
-const PropertyTypeItem: { [key in PropertyType]: string } = {
+const PropertyTypeText: { [key in PropertyType]: string } = {
     [PropertyType.house]: 'House',
     [PropertyType.apartmentOrFlat]: 'Apartment / Flat',
     [PropertyType.townhouse]: 'TownHouse',
@@ -20,4 +20,4 @@ const PropertyTypeItem: { [key in PropertyType]: string } = {
 
 export default PropertyType;
 
-export {PropertyTypeItem}
+export {PropertyTypeText}

@@ -1,13 +1,8 @@
 import {MultiSelect, MultiSelectContent, MultiSelectItem, MultiSelectTrigger, MultiSelectValue} from "@/components/ui/multi-select";
+import PropertyType, {PropertyTypeText} from "@/constants/property-type.constant";
 
 export default function PropertyTypeFilter({label = 'Amount', onValueChange, value}:{label?:string, onValueChange?(value: string[]): void, value?: string[] | undefined}){
-    const amounts:string[]=[
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-    ]
+    const propertyTypes:string[]= Object.values(PropertyTypeText);
 
     return (
         <>
@@ -16,7 +11,7 @@ export default function PropertyTypeFilter({label = 'Amount', onValueChange, val
                     <MultiSelectValue label={label} />
                 </MultiSelectTrigger>
                 <MultiSelectContent>
-                    {amounts.map((amount,index) => (<MultiSelectItem key={index} value={amount}>{amount}+</MultiSelectItem>))}
+                    {propertyTypes.map((propertyType,index) => (<MultiSelectItem key={index} value={propertyType}>{propertyType}</MultiSelectItem>))}
                 </MultiSelectContent>
             </MultiSelect>
         </>

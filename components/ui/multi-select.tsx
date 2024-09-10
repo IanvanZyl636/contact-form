@@ -4,7 +4,6 @@ import * as React from "react"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import TextMuted from "@/components/ui/typography/text-muted";
 import * as MultiSelectPrimitive from "@/components/ui/primitives/multi-select";
 
 const MultiSelect = MultiSelectPrimitive.Root;

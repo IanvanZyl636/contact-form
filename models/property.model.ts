@@ -1,8 +1,10 @@
 import PropertyType from "@/constants/property-type.constant";
 import SaleType from "@/constants/sale-type.constant";
 import LocationModel from "@/models/location.model";
+import {PropertyPhotoModel} from "@/models/property-photo.model";
 
 export default interface PropertyModel {
+    photos: Array<PropertyPhotoModel>;
     description:string;
     price:number;
     bedroomAmount:number;
@@ -11,7 +13,7 @@ export default interface PropertyModel {
     parkingSpaces:number;
     erfSize:number;
     floorSize:number;
-    availability:number;
+    availabilityInMonths:number;
     hasGarden:boolean;
     hasPool:boolean;
     isInSecurityEstate:boolean;

@@ -1,5 +1,10 @@
+import Province from "@/constants/province.constant";
+import Suburb from "@/constants/suburb.constant";
+import City from "@/constants/city.constant";
+
 export default interface LocationModel {
-    suburb: string;
-    city: string;
-    province:string;
+    street: string;
+    suburb: Suburb;
+    city: City;
+    province:Province;
 }

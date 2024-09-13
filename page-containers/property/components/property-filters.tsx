@@ -10,9 +10,8 @@ import {Checkbox} from "@/components/ui/checkbox";
 import * as React from "react";
 import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
 import {ReadonlyURLSearchParams, useRouter, useSearchParams} from "next/navigation";
-import {PropertySearchParamsModel} from "@/containers/property-page/models/property-search-params.model";
 import {useEffect, useState} from "react";
-
+import {PropertySearchParamsModel} from "@/page-containers/property/models/property-search-params.model";
 
 function useSetQueryParams(router: AppRouterInstance, filterParams: PropertySearchParamsModel) {
     useEffect(() => {
@@ -55,9 +54,9 @@ function useSetQueryParams(router: AppRouterInstance, filterParams: PropertySear
 
 function getSearchParams(searchParams: ReadonlyURLSearchParams) {
     const entries = Object.fromEntries(searchParams.entries());
-    const propertySearchParams:PropertySearchParamsModel = {};
+    const propertySearchParams: PropertySearchParamsModel = {};
 
-    Object.keys(entries).forEach((objKey) =>{
+    Object.keys(entries).forEach((objKey) => {
         const key = objKey as keyof PropertySearchParamsModel;
         const value = entries[key];
 
@@ -82,7 +81,21 @@ export default function PropertyFilters() {
     const searchParams = useSearchParams();
 
     const [filterParams, setFilterParams] = useState<PropertySearchParamsModel>(getSearchParams(searchParams));
-    const [moreFilters, setMoreFilters] = useState<boolean>(false);
+
+    const moreFiltersInitialVal = [
+        filterParams.minPrice,
+        filterParams.maxPrice,
+        filterParams.bathroomAmount,
+        filterParams.parkingSpaces,
+        filterParams.isPetFriendly,
+        filterParams.hasGarden,
+        filterParams.hasPool,
+        filterParams.isInSecurityEstate
+    ]
+        .filter((val) => val !== undefined)
+        .length > 0;
+
+    const [moreFilters, setMoreFilters] = useState<boolean>(moreFiltersInitialVal);
 
     useSetQueryParams(router, filterParams);
 
@@ -126,37 +139,37 @@ export default function PropertyFilters() {
             {
                 moreFilters ?
                     <>
-                        {/*<div className={'flex flex-row gap-4 items-stretch'}>*/}
-                        {/*    <div className={'w-full'}>*/}
-                        {/*        <PriceFilter label={'Min price'} onValueChange={(minPrice) => setFilterParams({*/}
-                        {/*            ...filterParams,*/}
-                        {/*            minPrice*/}
-                        {/*        })} value={filterParams.minPrice}/>*/}
-                        {/*    </div>*/}
-                        {/*    <div className={'w-full'}>*/}
-                        {/*        <PriceFilter label={'Max price'} onValueChange={(maxPrice) => setFilterParams({*/}
-                        {/*            ...filterParams,*/}
-                        {/*            maxPrice*/}
-                        {/*        })} value={filterParams.maxPrice}/>*/}
-                        {/*    </div>*/}
-                        {/*    <div className={'w-full'}>*/}
-                        {/*        <AmountFilter label={'Bathrooms'}*/}
-                        {/*                      onValueChange={(bathroomAmount) => setFilterParams({*/}
-                        {/*                          ...filterParams,*/}
-                        {/*                          bathroomAmount*/}
-                        {/*                      })} value={filterParams.bathroomAmount}/>*/}
-                        {/*    </div>*/}
-                        {/*    <div className={'w-full'}>*/}
-                        {/*        <AmountFilter label={'Parking Spaces'}*/}
-                        {/*                      onValueChange={(parkingSpaces) => setFilterParams({*/}
-                        {/*                          ...filterParams,*/}
-                        {/*                          parkingSpaces*/}
-                        {/*                      })} value={filterParams.parkingSpaces}/>*/}
-                        {/*    </div>*/}
-                        {/*    <div className={'w-full'}></div>*/}
-                        {/*</div>*/}
+                        <div className={'flex flex-row gap-4 items-stretch'}>
+                            <div className={'w-full'}>
+                                <PriceFilter label={'Min price'} onValueChange={(minPrice) => setFilterParams({
+                                    ...filterParams,
+                                    minPrice
+                                })} value={filterParams.minPrice}/>
+                            </div>
+                            <div className={'w-full'}>
+                                <PriceFilter label={'Max price'} onValueChange={(maxPrice) => setFilterParams({
+                                    ...filterParams,
+                                    maxPrice
+                                })} value={filterParams.maxPrice}/>
+                            </div>
+                            <div className={'w-full'}>
+                                <AmountFilter label={'Bathrooms'}
+                                              onValueChange={(bathroomAmount) => setFilterParams({
+                                                  ...filterParams,
+                                                  bathroomAmount
+                                              })} value={filterParams.bathroomAmount}/>
+                            </div>
+                            <div className={'w-full'}>
+                                <AmountFilter label={'Parking Spaces'}
+                                              onValueChange={(parkingSpaces) => setFilterParams({
+                                                  ...filterParams,
+                                                  parkingSpaces
+                                              })} value={filterParams.parkingSpaces}/>
+                            </div>
+                            <div className={'w-full'}></div>
+                        </div>
                         <div className={'flex flex-row gap-4'}>
-                            <div className={'flex flex-row gap-4 w-1/2'}>
+                            <div className={'flex flex-row gap-4 w-4/5'}>
                                 <div className={'w-full'}>
                                     <Checkbox label={'Pet Friendly'}
                                               onCheckedChange={(isPetFriendly: boolean) => setFilterParams({

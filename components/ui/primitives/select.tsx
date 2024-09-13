@@ -1,29 +1,30 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { clamp } from '@radix-ui/number';
-import { composeEventHandlers } from '@radix-ui/primitive';
-import { createCollection } from '@radix-ui/react-collection';
-import { useComposedRefs } from '@radix-ui/react-compose-refs';
-import { createContextScope } from '@radix-ui/react-context';
-import { useDirection } from '@radix-ui/react-direction';
-import { DismissableLayer } from '@radix-ui/react-dismissable-layer';
-import { useFocusGuards } from '@radix-ui/react-focus-guards';
-import { FocusScope } from '@radix-ui/react-focus-scope';
-import { useId } from '@radix-ui/react-id';
+import {clamp} from '@radix-ui/number';
+import {composeEventHandlers} from '@radix-ui/primitive';
+import {createCollection} from '@radix-ui/react-collection';
+import {useComposedRefs} from '@radix-ui/react-compose-refs';
+import {createContextScope} from '@radix-ui/react-context';
+import {useDirection} from '@radix-ui/react-direction';
+import {DismissableLayer} from '@radix-ui/react-dismissable-layer';
+import {useFocusGuards} from '@radix-ui/react-focus-guards';
+import {FocusScope} from '@radix-ui/react-focus-scope';
+import {useId} from '@radix-ui/react-id';
 import * as PopperPrimitive from '@radix-ui/react-popper';
-import { createPopperScope } from '@radix-ui/react-popper';
-import { Portal as PortalPrimitive } from '@radix-ui/react-portal';
-import { Primitive } from '@radix-ui/react-primitive';
-import { Slot } from '@radix-ui/react-slot';
-import { useCallbackRef } from '@radix-ui/react-use-callback-ref';
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
-import { useLayoutEffect } from '@radix-ui/react-use-layout-effect';
-import { usePrevious } from '@radix-ui/react-use-previous';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { hideOthers } from 'aria-hidden';
-import { RemoveScroll } from 'react-remove-scroll';
+import {createPopperScope} from '@radix-ui/react-popper';
+import {Portal as PortalPrimitive} from '@radix-ui/react-portal';
+import {Primitive} from '@radix-ui/react-primitive';
+import {Slot} from '@radix-ui/react-slot';
+import {useCallbackRef} from '@radix-ui/react-use-callback-ref';
+import {useControllableState} from '@radix-ui/react-use-controllable-state';
+import {useLayoutEffect} from '@radix-ui/react-use-layout-effect';
+import {usePrevious} from '@radix-ui/react-use-previous';
+import {VisuallyHidden} from '@radix-ui/react-visually-hidden';
+import {hideOthers} from 'aria-hidden';
+import {RemoveScroll} from 'react-remove-scroll';
 
-import type { Scope } from '@radix-ui/react-context';
+import type {Scope} from '@radix-ui/react-context';
+import TextMuted from "@/components/ui/typography/text-muted";
 
 type Direction = 'ltr' | 'rtl';
 
@@ -36,7 +37,7 @@ const SELECTION_KEYS = [' ', 'Enter'];
 
 const SELECT_NAME = 'Select';
 
-type ItemData = { value: string; disabled: boolean; textValue: string };
+type ItemData = { value: string | undefined; disabled: boolean; textValue: string };
 const [Collection, useCollection, createCollectionScope] = createCollection<
     SelectItemElement,
     ItemData
@@ -58,7 +59,7 @@ type SelectContextValue = {
     onValueNodeHasChildrenChange(hasChildren: boolean): void;
     contentId: string;
     value?: string;
-    onValueChange(value: string): void;
+    onValueChange(value: string | undefined): void;
     open: boolean;
     required?: boolean;
     onOpenChange(open: boolean): void;
@@ -82,10 +83,14 @@ interface SelectProps {
     children?: React.ReactNode;
     value?: string;
     defaultValue?: string;
+
     onValueChange?(value: string): void;
+
     open?: boolean;
     defaultOpen?: boolean;
+
     onOpenChange?(open: boolean): void;
+
     dir?: Direction;
     name?: string;
     autoComplete?: string;
@@ -190,7 +195,7 @@ const Select: React.FC<SelectProps> = (props: ScopedProps<SelectProps>) => {
                         onChange={(event) => setValue(event.target.value)}
                         disabled={disabled}
                     >
-                        {value === undefined ? <option value="" /> : null}
+                        {value === undefined ? <option value=""/> : null}
                         {Array.from(nativeOptionsSet)}
                     </BubbleSelect>
                 ) : null}
@@ -209,11 +214,13 @@ const TRIGGER_NAME = 'SelectTrigger';
 
 type SelectTriggerElement = React.ElementRef<typeof Primitive.button>;
 type PrimitiveButtonProps = React.ComponentPropsWithoutRef<typeof Primitive.button>;
-interface SelectTriggerProps extends PrimitiveButtonProps {}
+
+interface SelectTriggerProps extends PrimitiveButtonProps {
+}
 
 const SelectTrigger = React.forwardRef<SelectTriggerElement, SelectTriggerProps>(
     (props: ScopedProps<SelectTriggerProps>, forwardedRef) => {
-        const { __scopeSelect, disabled = false, ...triggerProps } = props;
+        const {__scopeSelect, disabled = false, ...triggerProps} = props;
         const popperScope = usePopperScope(__scopeSelect);
         const context = useSelectContext(TRIGGER_NAME, __scopeSelect);
         const isDisabled = context.disabled || disabled;
@@ -288,7 +295,7 @@ const SelectTrigger = React.forwardRef<SelectTriggerElement, SelectTriggerProps>
                         // only call handler if it's the left button (mousedown gets triggered by all mouse buttons)
                         // but not when the control key is pressed (avoiding MacOS right click); also not for touch
                         // devices because that would open the menu on scroll. (pen devices behave as touch on iOS).
-                        if (event.button === 0 && event.ctrlKey === false && event.pointerType === 'mouse') {
+                        if (event.button === 0 && !event.ctrlKey && event.pointerType === 'mouse') {
                             handleOpen(event);
                             // prevent trigger from stealing focus from the active item after opening.
                             event.preventDefault();
@@ -311,6 +318,39 @@ const SelectTrigger = React.forwardRef<SelectTriggerElement, SelectTriggerProps>
 );
 
 SelectTrigger.displayName = TRIGGER_NAME;
+
+const SELECTED_VALUE_NAME = 'SelectedValue';
+
+type SelectedValueElement = React.ElementRef<typeof Primitive.div>;
+interface SelectedValueProps extends Omit<PrimitiveDivProps, 'placeholder'> {
+    label?: string;
+}
+
+const SelectedValue = React.forwardRef<
+    SelectedValueElement,
+    SelectedValueProps
+>((props: ScopedProps<SelectedValueProps>, forwardedRef) => {
+    const { __scopeSelect, className, style, children, label } = props;
+    const context = useSelectContext(SELECTED_VALUE_NAME, __scopeSelect);
+
+    return (
+        <div ref={forwardedRef}>
+            {
+                label && context.value ?
+                    (
+                        <div className={'flex flex-col justify-start align-top text-start'}>
+                            <TextMuted className={'text-xs'}>{label}</TextMuted>
+                            <SelectValue {...props}/>
+                        </div>
+                    ) : label && !context.value ? (
+                        <TextMuted>{label}</TextMuted>
+                    ) : (
+                        <SelectValue {...props}/>
+                    )
+            }
+        </div>
+    )
+});
 
 /* -------------------------------------------------------------------------------------------------
  * SelectValue
@@ -360,11 +400,13 @@ SelectValue.displayName = VALUE_NAME;
 const ICON_NAME = 'SelectIcon';
 
 type SelectIconElement = React.ElementRef<typeof Primitive.span>;
-interface SelectIconProps extends PrimitiveSpanProps {}
+
+interface SelectIconProps extends PrimitiveSpanProps {
+}
 
 const SelectIcon = React.forwardRef<SelectIconElement, SelectIconProps>(
     (props: ScopedProps<SelectIconProps>, forwardedRef) => {
-        const { __scopeSelect, children, ...iconProps } = props;
+        const {__scopeSelect, children, ...iconProps} = props;
         return (
             <Primitive.span aria-hidden {...iconProps} ref={forwardedRef}>
                 {children || '▼'}
@@ -382,6 +424,7 @@ SelectIcon.displayName = ICON_NAME;
 const PORTAL_NAME = 'SelectPortal';
 
 type PortalProps = React.ComponentPropsWithoutRef<typeof PortalPrimitive>;
+
 interface SelectPortalProps {
     children?: React.ReactNode;
     /**
@@ -403,7 +446,9 @@ SelectPortal.displayName = PORTAL_NAME;
 const CONTENT_NAME = 'SelectContent';
 
 type SelectContentElement = SelectContentImplElement;
-interface SelectContentProps extends SelectContentImplProps {}
+
+interface SelectContentProps extends SelectContentImplProps {
+}
 
 const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>(
     (props: ScopedProps<SelectContentProps>, forwardedRef) => {
@@ -429,7 +474,7 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
                 : null;
         }
 
-        return <SelectContentImpl {...props} ref={forwardedRef} />;
+        return <SelectContentImpl {...props} ref={forwardedRef}/>;
     }
 );
 
@@ -445,12 +490,12 @@ type SelectContentContextValue = {
     content?: SelectContentElement | null;
     viewport?: SelectViewportElement | null;
     onViewportChange?: (node: SelectViewportElement | null) => void;
-    itemRefCallback?: (node: SelectItemElement | null, value: string, disabled: boolean) => void;
+    itemRefCallback?: (node: SelectItemElement | null, value: string | undefined, disabled: boolean) => void;
     selectedItem?: SelectItemElement | null;
     onItemLeave?: () => void;
     itemTextRefCallback?: (
         node: SelectItemTextElement | null,
-        value: string,
+        value: string | undefined,
         disabled: boolean
     ) => void;
     focusSelectedItem?: () => void;
@@ -546,7 +591,7 @@ const SelectContentImpl = React.forwardRef<SelectContentImplElement, SelectConte
                 for (const candidate of candidates) {
                     // if focus is already where we want to go, we don't want to keep going through the candidates
                     if (candidate === PREVIOUSLY_FOCUSED_ELEMENT) return;
-                    candidate?.scrollIntoView({ block: 'nearest' });
+                    candidate?.scrollIntoView({block: 'nearest'});
                     // viewport might have padding so scroll to its edges when focusing first/last items.
                     if (candidate === firstItem && viewport) viewport.scrollTop = 0;
                     if (candidate === lastItem && viewport) viewport.scrollTop = viewport.scrollHeight;
@@ -572,10 +617,10 @@ const SelectContentImpl = React.forwardRef<SelectContentImplElement, SelectConte
 
         // prevent selecting items on `pointerup` in some cases after opening from `pointerdown`
         // and close on `pointerup` outside.
-        const { onOpenChange, triggerPointerDownPosRef } = context;
+        const {onOpenChange, triggerPointerDownPosRef} = context;
         React.useEffect(() => {
             if (content) {
-                let pointerMoveDelta = { x: 0, y: 0 };
+                let pointerMoveDelta = {x: 0, y: 0};
 
                 const handlePointerMove = (event: PointerEvent) => {
                     pointerMoveDelta = {
@@ -599,12 +644,12 @@ const SelectContentImpl = React.forwardRef<SelectContentImplElement, SelectConte
 
                 if (triggerPointerDownPosRef.current !== null) {
                     document.addEventListener('pointermove', handlePointerMove);
-                    document.addEventListener('pointerup', handlePointerUp, { capture: true, once: true });
+                    document.addEventListener('pointerup', handlePointerUp, {capture: true, once: true});
                 }
 
                 return () => {
                     document.removeEventListener('pointermove', handlePointerMove);
-                    document.removeEventListener('pointerup', handlePointerUp, { capture: true });
+                    document.removeEventListener('pointerup', handlePointerUp, {capture: true});
                 };
             }
         }, [content, onOpenChange, triggerPointerDownPosRef]);
@@ -633,7 +678,7 @@ const SelectContentImpl = React.forwardRef<SelectContentImplElement, SelectConte
         });
 
         const itemRefCallback = React.useCallback(
-            (node: SelectItemElement | null, value: string, disabled: boolean) => {
+            (node: SelectItemElement | null, value: string | undefined, disabled: boolean) => {
                 const isFirstValidItem = !firstValidItemFoundRef.current && !disabled;
                 const isSelectedItem = context.value !== undefined && context.value === value;
                 if (isSelectedItem || isFirstValidItem) {
@@ -645,7 +690,7 @@ const SelectContentImpl = React.forwardRef<SelectContentImplElement, SelectConte
         );
         const handleItemLeave = React.useCallback(() => content?.focus(), [content]);
         const itemTextRefCallback = React.useCallback(
-            (node: SelectItemTextElement | null, value: string, disabled: boolean) => {
+            (node: SelectItemTextElement | null, value: string | undefined, disabled: boolean) => {
                 const isFirstValidItem = !firstValidItemFoundRef.current && !disabled;
                 const isSelectedItem = context.value !== undefined && context.value === value;
                 if (isSelectedItem || isFirstValidItem) {
@@ -701,7 +746,7 @@ const SelectContentImpl = React.forwardRef<SelectContentImplElement, SelectConte
                             event.preventDefault();
                         }}
                         onUnmountAutoFocus={composeEventHandlers(onCloseAutoFocus, (event) => {
-                            context.trigger?.focus({ preventScroll: true });
+                            context.trigger?.focus({preventScroll: true});
                             event.preventDefault();
                         })}
                     >
@@ -781,13 +826,15 @@ SelectContentImpl.displayName = CONTENT_IMPL_NAME;
 const ITEM_ALIGNED_POSITION_NAME = 'SelectItemAlignedPosition';
 
 type SelectItemAlignedPositionElement = React.ElementRef<typeof Primitive.div>;
-interface SelectItemAlignedPositionProps extends PrimitiveDivProps, SelectPopperPrivateProps {}
+
+interface SelectItemAlignedPositionProps extends PrimitiveDivProps, SelectPopperPrivateProps {
+}
 
 const SelectItemAlignedPosition = React.forwardRef<
     SelectItemAlignedPositionElement,
     SelectItemAlignedPositionProps
 >((props: ScopedProps<SelectItemAlignedPositionProps>, forwardedRef) => {
-    const { __scopeSelect, onPlaced, ...popperProps } = props;
+    const {__scopeSelect, onPlaced, ...popperProps} = props;
     const context = useSelectContext(CONTENT_NAME, __scopeSelect);
     const contentContext = useSelectContentContext(CONTENT_NAME, __scopeSelect);
     const [contentWrapper, setContentWrapper] = React.useState<HTMLDivElement | null>(null);
@@ -797,7 +844,7 @@ const SelectItemAlignedPosition = React.forwardRef<
     const shouldExpandOnScrollRef = React.useRef(false);
     const shouldRepositionRef = React.useRef(true);
 
-    const { viewport, selectedItem, selectedItemText, focusSelectedItem } = contentContext;
+    const {viewport, selectedItem, selectedItemText, focusSelectedItem} = contentContext;
     const position = React.useCallback(() => {
         if (
             context.trigger &&
@@ -939,7 +986,7 @@ const SelectItemAlignedPosition = React.forwardRef<
     // We wait for this to happen and then re-run the positining logic one more time to account for it.
     const handleScrollButtonChange = React.useCallback(
         (node: SelectScrollButtonImplElement | null) => {
-            if (node && shouldRepositionRef.current === true) {
+            if (node && !shouldRepositionRef.current) {
                 position();
                 focusSelectedItem?.();
                 shouldRepositionRef.current = false;
@@ -991,7 +1038,9 @@ const POPPER_POSITION_NAME = 'SelectPopperPosition';
 
 type SelectPopperPositionElement = React.ElementRef<typeof PopperPrimitive.Content>;
 type PopperContentProps = React.ComponentPropsWithoutRef<typeof PopperPrimitive.Content>;
-interface SelectPopperPositionProps extends PopperContentProps, SelectPopperPrivateProps {}
+
+interface SelectPopperPositionProps extends PopperContentProps, SelectPopperPrivateProps {
+}
 
 const SelectPopperPosition = React.forwardRef<
     SelectPopperPositionElement,
@@ -1048,13 +1097,14 @@ const VIEWPORT_NAME = 'SelectViewport';
 
 type SelectViewportElement = React.ElementRef<typeof Primitive.div>;
 type PrimitiveDivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>;
+
 interface SelectViewportProps extends PrimitiveDivProps {
     nonce?: string;
 }
 
 const SelectViewport = React.forwardRef<SelectViewportElement, SelectViewportProps>(
     (props: ScopedProps<SelectViewportProps>, forwardedRef) => {
-        const { __scopeSelect, nonce, ...viewportProps } = props;
+        const {__scopeSelect, nonce, ...viewportProps} = props;
         const contentContext = useSelectContentContext(VIEWPORT_NAME, __scopeSelect);
         const viewportContext = useSelectViewportContext(VIEWPORT_NAME, __scopeSelect);
         const composedRefs = useComposedRefs(forwardedRef, contentContext.onViewportChange);
@@ -1085,7 +1135,7 @@ const SelectViewport = React.forwardRef<SelectViewportElement, SelectViewportPro
                         }}
                         onScroll={composeEventHandlers(viewportProps.onScroll, (event) => {
                             const viewport = event.currentTarget;
-                            const { contentWrapper, shouldExpandOnScrollRef } = viewportContext;
+                            const {contentWrapper, shouldExpandOnScrollRef} = viewportContext;
                             if (shouldExpandOnScrollRef?.current && contentWrapper) {
                                 const scrolledBy = Math.abs(prevScrollTopRef.current - viewport.scrollTop);
                                 if (scrolledBy > 0) {
@@ -1131,15 +1181,17 @@ const [SelectGroupContextProvider, useSelectGroupContext] =
     createSelectContext<SelectGroupContextValue>(GROUP_NAME);
 
 type SelectGroupElement = React.ElementRef<typeof Primitive.div>;
-interface SelectGroupProps extends PrimitiveDivProps {}
+
+interface SelectGroupProps extends PrimitiveDivProps {
+}
 
 const SelectGroup = React.forwardRef<SelectGroupElement, SelectGroupProps>(
     (props: ScopedProps<SelectGroupProps>, forwardedRef) => {
-        const { __scopeSelect, ...groupProps } = props;
+        const {__scopeSelect, ...groupProps} = props;
         const groupId = useId();
         return (
             <SelectGroupContextProvider scope={__scopeSelect} id={groupId}>
-                <Primitive.div role="group" aria-labelledby={groupId} {...groupProps} ref={forwardedRef} />
+                <Primitive.div role="group" aria-labelledby={groupId} {...groupProps} ref={forwardedRef}/>
             </SelectGroupContextProvider>
         );
     }
@@ -1154,13 +1206,15 @@ SelectGroup.displayName = GROUP_NAME;
 const LABEL_NAME = 'SelectLabel';
 
 type SelectLabelElement = React.ElementRef<typeof Primitive.div>;
-interface SelectLabelProps extends PrimitiveDivProps {}
+
+interface SelectLabelProps extends PrimitiveDivProps {
+}
 
 const SelectLabel = React.forwardRef<SelectLabelElement, SelectLabelProps>(
     (props: ScopedProps<SelectLabelProps>, forwardedRef) => {
-        const { __scopeSelect, ...labelProps } = props;
+        const {__scopeSelect, ...labelProps} = props;
         const groupContext = useSelectGroupContext(LABEL_NAME, __scopeSelect);
-        return <Primitive.div id={groupContext.id} {...labelProps} ref={forwardedRef} />;
+        return <Primitive.div id={groupContext.id} {...labelProps} ref={forwardedRef}/>;
     }
 );
 
@@ -1173,7 +1227,7 @@ SelectLabel.displayName = LABEL_NAME;
 const ITEM_NAME = 'SelectItem';
 
 type SelectItemContextValue = {
-    value: string;
+    value: string | undefined;
     disabled: boolean;
     textId: string;
     isSelected: boolean;
@@ -1184,8 +1238,9 @@ const [SelectItemContextProvider, useSelectItemContext] =
     createSelectContext<SelectItemContextValue>(ITEM_NAME);
 
 type SelectItemElement = React.ElementRef<typeof Primitive.div>;
+
 interface SelectItemProps extends PrimitiveDivProps {
-    value: string;
+    value: string | undefined;
     disabled?: boolean;
     textValue?: string;
 }
@@ -1216,12 +1271,6 @@ const SelectItem = React.forwardRef<SelectItemElement, SelectItemProps>(
                 context.onOpenChange(false);
             }
         };
-
-        if (value === '') {
-            throw new Error(
-                'A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.'
-            );
-        }
 
         return (
             <SelectItemContextProvider
@@ -1274,7 +1323,7 @@ const SelectItem = React.forwardRef<SelectItemElement, SelectItemProps>(
                             } else if (pointerTypeRef.current === 'mouse') {
                                 // even though safari doesn't support this option, it's acceptable
                                 // as it only means it might scroll a few pixels when using the pointer.
-                                event.currentTarget.focus({ preventScroll: true });
+                                event.currentTarget.focus({preventScroll: true});
                             }
                         })}
                         onPointerLeave={composeEventHandlers(itemProps.onPointerLeave, (event) => {
@@ -1305,12 +1354,14 @@ SelectItem.displayName = ITEM_NAME;
 const ITEM_TEXT_NAME = 'SelectItemText';
 
 type SelectItemTextElement = React.ElementRef<typeof Primitive.span>;
-interface SelectItemTextProps extends PrimitiveSpanProps {}
+
+interface SelectItemTextProps extends PrimitiveSpanProps {
+}
 
 const SelectItemText = React.forwardRef<SelectItemTextElement, SelectItemTextProps>(
     (props: ScopedProps<SelectItemTextProps>, forwardedRef) => {
         // We ignore `className` and `style` as this part shouldn't be styled.
-        const { __scopeSelect, className, style, ...itemTextProps } = props;
+        const {__scopeSelect, className, style, ...itemTextProps} = props;
         const context = useSelectContext(ITEM_TEXT_NAME, __scopeSelect);
         const contentContext = useSelectContentContext(ITEM_TEXT_NAME, __scopeSelect);
         const itemContext = useSelectItemContext(ITEM_TEXT_NAME, __scopeSelect);
@@ -1333,7 +1384,7 @@ const SelectItemText = React.forwardRef<SelectItemTextElement, SelectItemTextPro
             [itemContext.disabled, itemContext.value, textContent]
         );
 
-        const { onNativeOptionAdd, onNativeOptionRemove } = nativeOptionsContext;
+        const {onNativeOptionAdd, onNativeOptionRemove} = nativeOptionsContext;
         useLayoutEffect(() => {
             onNativeOptionAdd(nativeOption);
             return () => onNativeOptionRemove(nativeOption);
@@ -1341,7 +1392,7 @@ const SelectItemText = React.forwardRef<SelectItemTextElement, SelectItemTextPro
 
         return (
             <>
-                <Primitive.span id={itemContext.textId} {...itemTextProps} ref={composedRefs} />
+                <Primitive.span id={itemContext.textId} {...itemTextProps} ref={composedRefs}/>
 
                 {/* Portal the select item text into the trigger value node */}
                 {itemContext.isSelected && context.valueNode && !context.valueNodeHasChildren
@@ -1361,14 +1412,16 @@ SelectItemText.displayName = ITEM_TEXT_NAME;
 const ITEM_INDICATOR_NAME = 'SelectItemIndicator';
 
 type SelectItemIndicatorElement = React.ElementRef<typeof Primitive.span>;
-interface SelectItemIndicatorProps extends PrimitiveSpanProps {}
+
+interface SelectItemIndicatorProps extends PrimitiveSpanProps {
+}
 
 const SelectItemIndicator = React.forwardRef<SelectItemIndicatorElement, SelectItemIndicatorProps>(
     (props: ScopedProps<SelectItemIndicatorProps>, forwardedRef) => {
-        const { __scopeSelect, ...itemIndicatorProps } = props;
+        const {__scopeSelect, ...itemIndicatorProps} = props;
         const itemContext = useSelectItemContext(ITEM_INDICATOR_NAME, __scopeSelect);
         return itemContext.isSelected ? (
-            <Primitive.span aria-hidden {...itemIndicatorProps} ref={forwardedRef} />
+            <Primitive.span aria-hidden {...itemIndicatorProps} ref={forwardedRef}/>
         ) : null;
     }
 );
@@ -1382,7 +1435,9 @@ SelectItemIndicator.displayName = ITEM_INDICATOR_NAME;
 const SCROLL_UP_BUTTON_NAME = 'SelectScrollUpButton';
 
 type SelectScrollUpButtonElement = SelectScrollButtonImplElement;
-interface SelectScrollUpButtonProps extends Omit<SelectScrollButtonImplProps, 'onAutoScroll'> {}
+
+interface SelectScrollUpButtonProps extends Omit<SelectScrollButtonImplProps, 'onAutoScroll'> {
+}
 
 const SelectScrollUpButton = React.forwardRef<
     SelectScrollUpButtonElement,
@@ -1411,7 +1466,7 @@ const SelectScrollUpButton = React.forwardRef<
             {...props}
             ref={composedRefs}
             onAutoScroll={() => {
-                const { viewport, selectedItem } = contentContext;
+                const {viewport, selectedItem} = contentContext;
                 if (viewport && selectedItem) {
                     viewport.scrollTop = viewport.scrollTop - selectedItem.offsetHeight;
                 }
@@ -1429,7 +1484,9 @@ SelectScrollUpButton.displayName = SCROLL_UP_BUTTON_NAME;
 const SCROLL_DOWN_BUTTON_NAME = 'SelectScrollDownButton';
 
 type SelectScrollDownButtonElement = SelectScrollButtonImplElement;
-interface SelectScrollDownButtonProps extends Omit<SelectScrollButtonImplProps, 'onAutoScroll'> {}
+
+interface SelectScrollDownButtonProps extends Omit<SelectScrollButtonImplProps, 'onAutoScroll'> {
+}
 
 const SelectScrollDownButton = React.forwardRef<
     SelectScrollDownButtonElement,
@@ -1461,7 +1518,7 @@ const SelectScrollDownButton = React.forwardRef<
             {...props}
             ref={composedRefs}
             onAutoScroll={() => {
-                const { viewport, selectedItem } = contentContext;
+                const {viewport, selectedItem} = contentContext;
                 if (viewport && selectedItem) {
                     viewport.scrollTop = viewport.scrollTop + selectedItem.offsetHeight;
                 }
@@ -1473,6 +1530,7 @@ const SelectScrollDownButton = React.forwardRef<
 SelectScrollDownButton.displayName = SCROLL_DOWN_BUTTON_NAME;
 
 type SelectScrollButtonImplElement = React.ElementRef<typeof Primitive.div>;
+
 interface SelectScrollButtonImplProps extends PrimitiveDivProps {
     onAutoScroll(): void;
 }
@@ -1481,7 +1539,7 @@ const SelectScrollButtonImpl = React.forwardRef<
     SelectScrollButtonImplElement,
     SelectScrollButtonImplProps
 >((props: ScopedProps<SelectScrollButtonImplProps>, forwardedRef) => {
-    const { __scopeSelect, onAutoScroll, ...scrollIndicatorProps } = props;
+    const {__scopeSelect, onAutoScroll, ...scrollIndicatorProps} = props;
     const contentContext = useSelectContentContext('SelectScrollButton', __scopeSelect);
     const autoScrollTimerRef = React.useRef<number | null>(null);
     const getItems = useCollection(__scopeSelect);
@@ -1503,7 +1561,7 @@ const SelectScrollButtonImpl = React.forwardRef<
     // We re-run the `scrollIntoView` logic to make sure it stays within the viewport.
     useLayoutEffect(() => {
         const activeItem = getItems().find((item) => item.ref.current === document.activeElement);
-        activeItem?.ref.current?.scrollIntoView({ block: 'nearest' });
+        activeItem?.ref.current?.scrollIntoView({block: 'nearest'});
     }, [getItems]);
 
     return (
@@ -1511,7 +1569,7 @@ const SelectScrollButtonImpl = React.forwardRef<
             aria-hidden
             {...scrollIndicatorProps}
             ref={forwardedRef}
-            style={{ flexShrink: 0, ...scrollIndicatorProps.style }}
+            style={{flexShrink: 0, ...scrollIndicatorProps.style}}
             onPointerDown={composeEventHandlers(scrollIndicatorProps.onPointerDown, () => {
                 if (autoScrollTimerRef.current === null) {
                     autoScrollTimerRef.current = window.setInterval(onAutoScroll, 50);
@@ -1537,12 +1595,14 @@ const SelectScrollButtonImpl = React.forwardRef<
 const SEPARATOR_NAME = 'SelectSeparator';
 
 type SelectSeparatorElement = React.ElementRef<typeof Primitive.div>;
-interface SelectSeparatorProps extends PrimitiveDivProps {}
+
+interface SelectSeparatorProps extends PrimitiveDivProps {
+}
 
 const SelectSeparator = React.forwardRef<SelectSeparatorElement, SelectSeparatorProps>(
     (props: ScopedProps<SelectSeparatorProps>, forwardedRef) => {
-        const { __scopeSelect, ...separatorProps } = props;
-        return <Primitive.div aria-hidden {...separatorProps} ref={forwardedRef} />;
+        const {__scopeSelect, ...separatorProps} = props;
+        return <Primitive.div aria-hidden {...separatorProps} ref={forwardedRef}/>;
     }
 );
 
@@ -1556,16 +1616,18 @@ const ARROW_NAME = 'SelectArrow';
 
 type SelectArrowElement = React.ElementRef<typeof PopperPrimitive.Arrow>;
 type PopperArrowProps = React.ComponentPropsWithoutRef<typeof PopperPrimitive.Arrow>;
-interface SelectArrowProps extends PopperArrowProps {}
+
+interface SelectArrowProps extends PopperArrowProps {
+}
 
 const SelectArrow = React.forwardRef<SelectArrowElement, SelectArrowProps>(
     (props: ScopedProps<SelectArrowProps>, forwardedRef) => {
-        const { __scopeSelect, ...arrowProps } = props;
+        const {__scopeSelect, ...arrowProps} = props;
         const popperScope = usePopperScope(__scopeSelect);
         const context = useSelectContext(ARROW_NAME, __scopeSelect);
         const contentContext = useSelectContentContext(ARROW_NAME, __scopeSelect);
         return context.open && contentContext.position === 'popper' ? (
-            <PopperPrimitive.Arrow {...popperScope} {...arrowProps} ref={forwardedRef} />
+            <PopperPrimitive.Arrow {...popperScope} {...arrowProps} ref={forwardedRef}/>
         ) : null;
     }
 );
@@ -1580,7 +1642,7 @@ function shouldShowPlaceholder(value?: string) {
 
 const BubbleSelect = React.forwardRef<HTMLSelectElement, React.ComponentPropsWithoutRef<'select'>>(
     (props, forwardedRef) => {
-        const { value, ...selectProps } = props;
+        const {value, ...selectProps} = props;
         const ref = React.useRef<HTMLSelectElement>(null);
         const composedRefs = useComposedRefs(forwardedRef, ref);
         const prevValue = usePrevious(value);
@@ -1595,7 +1657,7 @@ const BubbleSelect = React.forwardRef<HTMLSelectElement, React.ComponentPropsWit
             ) as PropertyDescriptor;
             const setValue = descriptor.set;
             if (prevValue !== value && setValue) {
-                const event = new Event('change', { bubbles: true });
+                const event = new Event('change', {bubbles: true});
                 setValue.call(select, value);
                 select.dispatchEvent(event);
             }
@@ -1615,7 +1677,7 @@ const BubbleSelect = React.forwardRef<HTMLSelectElement, React.ComponentPropsWit
          */
         return (
             <VisuallyHidden asChild>
-                <select {...selectProps} ref={composedRefs} defaultValue={value} />
+                <select {...selectProps} ref={composedRefs}/>
             </VisuallyHidden>
         );
     }
@@ -1699,7 +1761,7 @@ function wrapArray<T>(array: T[], startIndex: number) {
 
 const Root = Select;
 const Trigger = SelectTrigger;
-const Value = SelectValue;
+const Value = SelectedValue;
 const Icon = SelectIcon;
 const Portal = SelectPortal;
 const Content = SelectContent;
@@ -1719,7 +1781,7 @@ export {
     //
     Select,
     SelectTrigger,
-    SelectValue,
+    SelectedValue,
     SelectIcon,
     SelectPortal,
     SelectContent,

@@ -309,7 +309,7 @@ const MultiSelectTrigger = React.forwardRef<MultiSelectTriggerElement, MultiSele
                         // only call handler if it's the left button (mousedown gets triggered by all mouse buttons)
                         // but not when the control key is pressed (avoiding MacOS right click); also not for touch
                         // devices because that would open the menu on scroll. (pen devices behave as touch on iOS).
-                        if (event.button === 0 && event.ctrlKey === false && event.pointerType === 'mouse') {
+                        if (event.button === 0 && !event.ctrlKey && event.pointerType === 'mouse') {
                             handleOpen(event);
                             // prevent trigger from stealing focus from the active item after opening.
                             event.preventDefault();
@@ -657,7 +657,6 @@ const MultiSelectContentImpl = React.forwardRef<MultiSelectContentImplElement, M
 
         const [searchRef, handleTypeaheadSearch] = useTypeaheadSearch((search) => {
             const enabledItems = getItems().filter((item) => !item.disabled);
-            const currentItem = enabledItems.find((item) => item.ref.current === document.activeElement);
             const nextItem = findNextItem(enabledItems, search);
             if (nextItem) {
                 /**
@@ -975,7 +974,7 @@ const MultiSelectItemAlignedPosition = React.forwardRef<
     // We wait for this to happen and then re-run the positining logic one more time to account for it.
     const handleScrollButtonChange = React.useCallback(
         (node: MultiSelectScrollButtonImplElement | null) => {
-            if (node && shouldRepositionRef.current === true) {
+            if (node && !shouldRepositionRef.current) {
                 position();
                 focusSelectedItem?.();
                 shouldRepositionRef.current = false;
@@ -1618,7 +1617,7 @@ MultiSelectArrow.displayName = ARROW_NAME;
 /* -----------------------------------------------------------------------------------------------*/
 
 function shouldShowPlaceholder(value?: string[]) {
-    return !value || value === undefined || value === null || value.length === 0;
+    return !value || value.length === 0;
 }
 
 const BubbleMultiSelect = React.forwardRef<HTMLSelectElement, React.ComponentPropsWithoutRef<'select'>>(
@@ -1658,7 +1657,7 @@ const BubbleMultiSelect = React.forwardRef<HTMLSelectElement, React.ComponentPro
          */
         return (
             <VisuallyHidden asChild>
-                <select {...selectProps} ref={composedRefs} defaultValue={value} />
+                <select {...selectProps} ref={composedRefs} />
             </VisuallyHidden>
         );
     }
@@ -1721,19 +1720,16 @@ function findNextItem<T extends { textValue: string }>(
 ) {
     const isRepeated = search.length > 1 && Array.from(search).every((char) => char === search[0]);
     const normalizedSearch = isRepeated ? search[0] : search;
-    const nextItem = items.find((item) =>
+
+    return items.find((item) =>
         item.textValue.toLowerCase().startsWith(normalizedSearch.toLowerCase())
     );
-    return nextItem;
 }
 
 /**
  * Wraps an array around itself at a given start index
  * Example: `wrapArray(['a', 'b', 'c', 'd'], 2) === ['c', 'd', 'a', 'b']`
  */
-function wrapArray<T>(array: T[], startIndex: number) {
-    return array.map((_, index) => array[(startIndex + index) % array.length]);
-}
 
 const Root = MultiSelect;
 const Trigger = MultiSelectTrigger;

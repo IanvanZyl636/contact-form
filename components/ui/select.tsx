@@ -5,45 +5,16 @@ import * as SelectPrimitive from "@/components/ui/primitives/select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import TextMuted from "@/components/ui/typography/text-muted";
 
 const Select = SelectPrimitive.Root
 
 const SelectGroup = SelectPrimitive.Group
 
-interface SelectValueProps extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Value>{
-  label?: string,
-  currentValue?:string | undefined,
-  noSelectionValue?:string | undefined,
-}
-
-const SelectValue = React.forwardRef<
-    HTMLDivElement,
-    SelectValueProps
->(({className, children, label, noSelectionValue, currentValue, ...props}, ref) => {
-
-  return (
-      <div ref={ref}>
-        {
-          noSelectionValue && currentValue && noSelectionValue !== currentValue ?
-            (
-                <div className={'flex flex-col justify-start align-top text-start'}>
-                  <TextMuted className={'text-xs'}>{label}</TextMuted>
-                  <SelectPrimitive.Value {...props}/>
-                </div>
-            ) : noSelectionValue && currentValue ? (
-                <TextMuted>{label}</TextMuted>
-            ) : (
-                <SelectPrimitive.Value {...props}/>
-            )
-        }
-      </div>
-  )
-});
+const SelectValue = SelectPrimitive.Value
 
 const SelectTrigger = React.forwardRef<
-    React.ElementRef<typeof SelectPrimitive.Trigger>,
-    React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
+  React.ElementRef<typeof SelectPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}

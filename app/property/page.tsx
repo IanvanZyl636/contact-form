@@ -1,4 +1,4 @@
-import PropertyPageContainer from "@/containers/property-page";
+import PropertyPageContainer from "@/page-containers/property";
 
 export default function PropertyPage() {
     return <PropertyPageContainer/>

@@ -12,7 +12,7 @@ export default function SaleTypeFilter({onValueChange, value}:{onValueChange?(va
 
     return (
         <>
-            <Select  onValueChange={onValueChange} value={value}>
+            <Select onValueChange={onValueChange} value={value}>
                 <SelectTrigger className="w-full">
                     <SelectValue />
                 </SelectTrigger>

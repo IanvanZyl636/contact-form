@@ -324,13 +324,14 @@ const SELECTED_VALUE_NAME = 'SelectedValue';
 type SelectedValueElement = React.ElementRef<typeof Primitive.div>;
 interface SelectedValueProps extends Omit<PrimitiveDivProps, 'placeholder'> {
     label?: string;
+    placeholder?: React.ReactNode;
 }
 
 const SelectedValue = React.forwardRef<
     SelectedValueElement,
     SelectedValueProps
 >((props: ScopedProps<SelectedValueProps>, forwardedRef) => {
-    const { __scopeSelect, className, style, children, label } = props;
+    const { __scopeSelect, label } = props;
     const context = useSelectContext(SELECTED_VALUE_NAME, __scopeSelect);
 
     return (
@@ -352,6 +353,7 @@ const SelectedValue = React.forwardRef<
     )
 });
 
+SelectedValue.displayName = SELECTED_VALUE_NAME;
 /* -------------------------------------------------------------------------------------------------
  * SelectValue
  * -----------------------------------------------------------------------------------------------*/

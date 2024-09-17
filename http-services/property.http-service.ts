@@ -24,4 +24,4 @@ class PropertyHttpService {
     }
 }
 
-export default PropertyHttpService.getInstance;
+export default PropertyHttpService.getInstance();

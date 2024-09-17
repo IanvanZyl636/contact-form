@@ -123,4 +123,12 @@
       --tw-bg-opacity: 1;
       background-color:hsl(var(--whatsapp), var(--tw-bg-opacity));
     }
+
+    .primary-list-item{
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.22);
+    }
+
+    .primary-list-item:hover{
+      box-shadow: 0px -2px 4px #c1c1c1;
+    }
   }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+<title>icn/bathrooms-alt-1 copy</title>
+<desc>Created with Sketch.</desc>
+<g id="icn_x2F_bathrooms-alt-1-copy">
+	
+		<g id="Group" transform="translate(10.000000, 9.500000) scale(-1, 1) translate(-10.000000, -9.500000) translate(1.000000, 1.000000)">
+		<path id="Shape" fill="#5C6576" d="M3,2.473C3,1.107,4.107,0,5.473,0c1.367,0,2.479,1.102,2.49,2.469l0.004,0.527
+			C7.969,3.272,7.747,3.498,7.471,3.5C7.195,3.502,6.969,3.28,6.966,3.004L6.962,2.477C6.955,1.659,6.29,1,5.473,1
+			C4.66,1,4,1.659,4,2.473V8h14v2c0,2.336-1.602,4.298-3.768,4.848l0.715,1.43c0.123,0.246,0.023,0.548-0.225,0.671
+			c-0.246,0.122-0.548,0.022-0.671-0.224L13.191,15H4.809l-0.86,1.725c-0.124,0.246-0.425,0.346-0.671,0.224
+			c-0.248-0.123-0.348-0.425-0.225-0.671l0.715-1.43C1.602,14.298,0,12.336,0,10V8h3V2.473z M17,10V9H1v1c0,2.209,1.791,4,4,4h8
+			C15.209,14,17,12.209,17,10z"/>
+		<circle id="Oval-Copy-5" fill="#5C6576" cx="8.5" cy="4.5" r="0.5"/>
+		<circle id="Oval-Copy-6" fill="#5C6576" cx="6.5" cy="4.5" r="0.5"/>
+		<circle id="Oval-Copy-8" fill="#5C6576" cx="8.5" cy="6.5" r="0.5"/>
+		<circle id="Oval-Copy-10" fill="#5C6576" cx="6.5" cy="6.5" r="0.5"/>
+		<circle id="Oval-Copy-9" fill="#5C6576" cx="10.5" cy="6.5" r="0.5"/>
+	</g>
+</g>
+</svg>

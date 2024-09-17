@@ -7,7 +7,10 @@ import City from "@/constants/city.constant";
 
 const propertyListData:Array<PropertyModel> = [
   {
-    photos:[],
+    photos:[{
+      isFeature: true,
+      url: "/property-photos/vacant-land/Culture-Grumpy-Cat-487386121.jpg"
+    }],
     description: `
       Perfect opportunity in a well developing area of Kookrus. This 8 921 square meters is ideal area to develop townhouses or subdivide and sell individual stands. Close to local amenities and easy access to Meyerton CBD and R59 onramp. Don't delay and contact me today!!
       \n\n    
@@ -35,7 +38,16 @@ const propertyListData:Array<PropertyModel> = [
     }
   },
   {
-    photos:[],
+    photos:[
+      {
+        isFeature: true,
+        url: "/property-photos/house/jpg.jpg"
+      },
+      {
+        isFeature: false,
+        url: "/property-photos/house/koeksisters-recipe.jpg"
+      }
+    ],
     description: `
       Looking for a place to call home with low maintenance and everything move-in ready? This one has just come on the market!
       \n\n
@@ -87,7 +99,10 @@ const propertyListData:Array<PropertyModel> = [
     }
   },
   {
-    photos:[],
+    photos:[{
+      isFeature: true,
+      url: "/property-photos/vacant-land/Culture-Grumpy-Cat-487386121.jpg"
+    }],
     description: `
       Lovely modern townhouse in RiverView Estate with 24HR security.
       \n\n
@@ -117,7 +132,10 @@ const propertyListData:Array<PropertyModel> = [
     }
   },
   {
-    photos:[],
+    photos:[{
+      isFeature: true,
+      url: "/property-photos/vacant-land/Culture-Grumpy-Cat-487386121.jpg"
+    }],
     description: `
       Lovely modern townhouse in RiverView Estate with 24HR security.
       \n\n

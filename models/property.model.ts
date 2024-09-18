@@ -4,6 +4,7 @@ import LocationModel from "@/models/location.model";
 import {PropertyPhotoModel} from "@/models/property-photo.model";
 
 export default interface PropertyModel {
+    id:string;
     photos: Array<PropertyPhotoModel>;
     description:string;
     price:number;

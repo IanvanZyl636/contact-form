@@ -7,6 +7,7 @@ import City from "@/constants/city.constant";
 
 const propertyListData:Array<PropertyModel> = [
   {
+    id:'e249c1a7-2df4-44d7-817a-566708b46820',
     photos:[{
       isFeature: true,
       url: "/property-photos/vacant-land/Culture-Grumpy-Cat-487386121.jpg"
@@ -38,6 +39,7 @@ const propertyListData:Array<PropertyModel> = [
     }
   },
   {
+    id:'791a925e-dc58-4b59-914d-c0d81e2bf9e2',
     photos:[
       {
         isFeature: true,
@@ -99,6 +101,7 @@ const propertyListData:Array<PropertyModel> = [
     }
   },
   {
+    id:'3a34446f-798f-4f7b-a394-2d57a13ac6cd',
     photos:[{
       isFeature: true,
       url: "/property-photos/vacant-land/Culture-Grumpy-Cat-487386121.jpg"
@@ -132,6 +135,7 @@ const propertyListData:Array<PropertyModel> = [
     }
   },
   {
+    id:'15cf2e56-f7fd-4191-ba3a-7dbe84093377',
     photos:[{
       isFeature: true,
       url: "/property-photos/vacant-land/Culture-Grumpy-Cat-487386121.jpg"

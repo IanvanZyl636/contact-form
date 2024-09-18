@@ -7,13 +7,12 @@ import {Minus, Plus} from "lucide-react";
 import PriceFilter from "@/page-containers/property/components/filters/price-filter";
 import {Checkbox} from "@/components/ui/checkbox";
 import * as React from "react";
-import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
-import {ReadonlyURLSearchParams, useRouter, useSearchParams} from "next/navigation";
+import {ReadonlyURLSearchParams, useSearchParams} from "next/navigation";
 import {ReactNode, useEffect, useState} from "react";
 import {PropertySearchParamsModel} from "@/page-containers/property/models/property-search-params.model";
 import AmountFilter from "@/page-containers/property/components/filters/amount-filter";
 
-function useSetQueryParams(router: AppRouterInstance, filterParams: PropertySearchParamsModel) {
+function useSetQueryParams(filterParams: PropertySearchParamsModel) {
     useEffect(() => {
         const params = new URLSearchParams();
 
@@ -48,7 +47,8 @@ function useSetQueryParams(router: AppRouterInstance, filterParams: PropertySear
             params.set(key, formattedStringValue);
         });
 
-        router.replace(`?${params.toString()}`);
+        window.history.replaceState(null, '', `?${params.toString()}`);
+
     }, [filterParams]);
 }
 
@@ -93,13 +93,11 @@ const CheckBoxFilterContainer = ({children}: { children?: ReactNode }) => {
 }
 
 export default function PropertyFilters() {
-    const router = useRouter();
     const searchParams = useSearchParams();
 
     const propertySearchParams = getSearchParams(searchParams);
 
     const [filterParams, setFilterParams] = useState<PropertySearchParamsModel>(propertySearchParams);
-    const [bedroomAmount, setBedroomAmount] = useState(propertySearchParams.bedroomAmount);
 
     const moreFiltersInitialVal = [
         filterParams.minPrice,
@@ -116,7 +114,7 @@ export default function PropertyFilters() {
 
     const [moreFilters, setMoreFilters] = useState<boolean>(moreFiltersInitialVal);
 
-    useSetQueryParams(router, filterParams);
+    useSetQueryParams(filterParams);
 
     return (
         <div className={'text-secondary-foreground py-2 flex flex-col'}>
@@ -133,7 +131,10 @@ export default function PropertyFilters() {
                                         })} value={filterParams.propertyTypes}/>
                 </FilterContainer>
                 <FilterContainer>
-                    <AmountFilter label={'Bedrooms'} onValueChange={(bedroomAmount) => setBedroomAmount(bedroomAmount)} value={bedroomAmount}/>
+                    <AmountFilter label={'Bedrooms'} onValueChange={(bedroomAmount) => setFilterParams({
+                        ...filterParams,
+                        bedroomAmount
+                    })} value={filterParams.bedroomAmount}/>
                 </FilterContainer>
                 <FilterContainer>
                     <AmountFilter label={'Garages'} onValueChange={(garageAmount) => setFilterParams({

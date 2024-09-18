@@ -59,7 +59,7 @@ type SelectContextValue = {
     onValueNodeHasChildrenChange(hasChildren: boolean): void;
     contentId: string;
     value?: string;
-    onValueChange(value: string | undefined): void;
+    onValueChange?(value: string | undefined): void;
     open: boolean;
     required?: boolean;
     onOpenChange(open: boolean): void;
@@ -106,7 +106,6 @@ const Select: React.FC<SelectProps> = (props: ScopedProps<SelectProps>) => {
         defaultOpen,
         onOpenChange,
         value: valueProp,
-        defaultValue,
         onValueChange,
         dir,
         name,
@@ -124,11 +123,7 @@ const Select: React.FC<SelectProps> = (props: ScopedProps<SelectProps>) => {
         defaultProp: defaultOpen,
         onChange: onOpenChange,
     });
-    const [value, setValue] = useControllableState({
-        prop: valueProp,
-        defaultProp: defaultValue,
-        onChange: onValueChange,
-    });
+
     const triggerPointerDownPosRef = React.useRef<{ x: number; y: number } | null>(null);
 
     // We set this to true by default so that events bubble to forms without JS (SSR)
@@ -156,8 +151,8 @@ const Select: React.FC<SelectProps> = (props: ScopedProps<SelectProps>) => {
                 valueNodeHasChildren={valueNodeHasChildren}
                 onValueNodeHasChildrenChange={setValueNodeHasChildren}
                 contentId={useId()}
-                value={value}
-                onValueChange={setValue}
+                value={valueProp}
+                onValueChange={onValueChange}
                 open={open}
                 onOpenChange={setOpen}
                 dir={direction}
@@ -190,12 +185,12 @@ const Select: React.FC<SelectProps> = (props: ScopedProps<SelectProps>) => {
                         tabIndex={-1}
                         name={name}
                         autoComplete={autoComplete}
-                        value={value}
+                        value={valueProp}
                         // enable form autofill
-                        onChange={(event) => setValue(event.target.value)}
+                        onChange={(event) => onValueChange?onValueChange(event.target.value):null}
                         disabled={disabled}
                     >
-                        {value === undefined ? <option value=""/> : null}
+                        {valueProp === undefined ? <option value=""/> : null}
                         {Array.from(nativeOptionsSet)}
                     </BubbleSelect>
                 ) : null}
@@ -232,8 +227,8 @@ const SelectTrigger = React.forwardRef<SelectTriggerElement, SelectTriggerProps>
             const enabledItems = getItems().filter((item) => !item.disabled);
             const currentItem = enabledItems.find((item) => item.value === context.value);
             const nextItem = findNextItem(enabledItems, search, currentItem);
-            if (nextItem !== undefined) {
-                context.onValueChange(nextItem.value);
+            if (nextItem !== undefined && context?.onValueChange) {
+                context?.onValueChange(nextItem.value);
             }
         });
 
@@ -1268,7 +1263,7 @@ const SelectItem = React.forwardRef<SelectItemElement, SelectItemProps>(
         const pointerTypeRef = React.useRef<React.PointerEvent['pointerType']>('touch');
 
         const handleSelect = () => {
-            if (!disabled) {
+            if (!disabled && context.onValueChange) {
                 context.onValueChange(value);
                 context.onOpenChange(false);
             }

@@ -3,8 +3,13 @@ import * as React from "react";
 import PropertyFilters from "./components/property-filters";
 import PropertySorting from "./components/property-sorting";
 import PropertyList from "./components/property-list";
+import PropertyModel from "@/models/property.model";
 
-export default function PropertyPage() {
+export const revalidate = 120;
+
+export default async function PropertyPage() {
+    const propertyList:Array<PropertyModel> = await (await fetch('http://localhost:3000/api/property')).json();
+
     return (
         <>
             <div className={'bg-secondary mb-4'}>
@@ -19,7 +24,7 @@ export default function PropertyPage() {
                 <PropertySorting/>
             </div>
             <div className={'pb-8 flex flex-col gap-8 md:container md:mx-auto'}>
-                <PropertyList/>
+                <PropertyList propertyList={propertyList}/>
             </div>
         </>
     )

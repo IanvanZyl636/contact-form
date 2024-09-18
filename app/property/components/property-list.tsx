@@ -1,7 +1,5 @@
 'use client'
 
-import React, {useEffect} from 'react';
-import PropertyHttpService from "@/http-services/property.http-service";
 import PropertyModel from "@/models/property.model";
 import Image from 'next/image'
 import H3 from "@/components/ui/typography/h3";
@@ -10,7 +8,6 @@ import TextParagraph from "@/components/ui/typography/text-paragraph";
 import LinesEllipsis from 'react-lines-ellipsis'
 import PropertyType, {PropertyTitleText} from "@/constants/property-type.constant";
 import {SuburbText} from "@/constants/suburb.constant";
-
 import iconBath from "@/public/property-feature-icons/icon_bath.svg";
 import iconBed from "@/public/property-feature-icons/icon_bed.svg";
 import iconParking from "@/public/property-feature-icons/icon_parking.svg";
@@ -18,21 +15,11 @@ import iconErf from "@/public/property-feature-icons/icon_erf.svg";
 import iconFloor from "@/public/property-feature-icons/icon_floor.svg";
 import {cn} from '@/lib/utils';
 
-const propertyHttpService = PropertyHttpService;
+export interface PropertyListProps {
+    propertyList:Array<PropertyModel>;
+}
 
-const PropertyList = () => {
-    const [propertyList, setPropertyList] = React.useState<PropertyModel[]>([]);
-
-    useEffect(() => {
-        const fetchPropertyList = async () => {
-            const result = await propertyHttpService.getPropertyList();
-
-            setPropertyList(result);
-        }
-
-        fetchPropertyList();
-    }, [propertyHttpService]);
-
+export default function PropertyList({propertyList}:PropertyListProps){
     const title = (value: PropertyModel) => {
         switch (value.propertyType) {
             case PropertyType.apartmentOrFlat:
@@ -128,5 +115,3 @@ const PropertyList = () => {
         </div>
     );
 };
-
-export default PropertyList;

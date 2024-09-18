@@ -1,5 +1,5 @@
 import {MultiSelect, MultiSelectContent, MultiSelectItem, MultiSelectTrigger, MultiSelectValue} from "@/components/ui/multi-select";
-import PropertyType, {PropertyTypeText} from "@/constants/property-type.constant";
+import {PropertyTypeText} from "@/constants/property-type.constant";
 
 export default function PropertyTypeFilter({label = 'Amount', onValueChange, value}:{label?:string, onValueChange?(value: string[]): void, value?: string[] | undefined}){
     const propertyTypes:string[]= Object.values(PropertyTypeText);

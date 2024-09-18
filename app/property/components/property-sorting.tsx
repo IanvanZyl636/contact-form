@@ -1,7 +1,8 @@
 'use client'
 
 import React from 'react';
-import PropertySorter from "@/page-containers/property/components/sorting/property-sorter";
+import PropertySorter from "./sorting/property-sorter";
+
 
 const PropertySorting = () => {
     const [propertySorting, setPropertySorting] = React.useState<string>();

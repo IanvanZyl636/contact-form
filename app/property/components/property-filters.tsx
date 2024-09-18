@@ -1,16 +1,16 @@
 'use client';
 
-import SaleTypeFilter from "@/page-containers/property/components/filters/sale-type-filter";
-import PropertyTypeFilter from "@/page-containers/property/components/filters/property-type-filter";
+import SaleTypeFilter from "./filters/sale-type-filter";
+import PropertyTypeFilter from "./filters/property-type-filter";
 import {Button} from "@/components/ui/button";
 import {Minus, Plus} from "lucide-react";
-import PriceFilter from "@/page-containers/property/components/filters/price-filter";
+import PriceFilter from "./filters/price-filter";
 import {Checkbox} from "@/components/ui/checkbox";
 import * as React from "react";
 import {ReadonlyURLSearchParams, useSearchParams} from "next/navigation";
 import {ReactNode, useEffect, useState} from "react";
-import {PropertySearchParamsModel} from "@/page-containers/property/models/property-search-params.model";
-import AmountFilter from "@/page-containers/property/components/filters/amount-filter";
+import {PropertySearchParamsModel} from "../models/property-search-params.model";
+import AmountFilter from "./filters/amount-filter";
 
 function useSetQueryParams(filterParams: PropertySearchParamsModel) {
     useEffect(() => {

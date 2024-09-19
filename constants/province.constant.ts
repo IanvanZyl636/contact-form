@@ -22,6 +22,21 @@ const ProvinceText: { [key in Province]: string } = {
     [Province.WC]: 'Western Cape',
 };
 
+const ProvinceUrl: { [key in Province]: string } = {
+    [Province.EC]: 'eastern-cape',
+    [Province.FS]: 'free-state',
+    [Province.GT]: 'gauteng',
+    [Province.NL]: 'kwaZulu-natal',
+    [Province.LP]: 'limpopo',
+    [Province.MP]: 'mpumalanga',
+    [Province.NC]: 'northern-cape',
+    [Province.NW]: 'north-west',
+    [Province.WC]: 'western-cape',
+};
+
 export default Province;
 
-export {ProvinceText}
+export {
+    ProvinceText,
+    ProvinceUrl
+}

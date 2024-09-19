@@ -8,7 +8,7 @@ import PropertyModel from "@/models/property.model";
 export const revalidate = 120;
 
 export default async function PropertyPage() {
-    const propertyList:Array<PropertyModel> = await (await fetch('http://localhost:3000/api/property')).json();
+    const propertyList:Array<PropertyModel> = await (await fetch('https://raw.githubusercontent.com/IanvanZyl636/contact-form/master/data/generated/property-list.json')).json();
 
     return (
         <>

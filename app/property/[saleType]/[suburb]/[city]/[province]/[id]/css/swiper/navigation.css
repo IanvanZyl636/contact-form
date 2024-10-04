@@ -1,0 +1,92 @@
+:root {
+    --swiper-navigation-size: 40px;
+    --swiper-navigation-padding: 0.75rem;
+    --swiper-navigation-top-offset: 50%;
+    --swiper-navigation-sides-offset: 10px;
+    --swiper-navigation-color: hsl(var(--primary-foreground));
+
+}
+.swiper-button-prev,
+.swiper-button-next {
+    position: absolute;
+    top: var(--swiper-navigation-top-offset, 50%);
+    width: calc((var(--swiper-navigation-size) / 44 * 27) + (var(--swiper-navigation-padding) * 2));
+    height: calc(var(--swiper-navigation-size)+ (var(--swiper-navigation-padding) * 2));
+    margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--swiper-navigation-color, var(--swiper-theme-color));
+    transition: background-color 0.4s ease;
+}
+.swiper:hover > .swiper-button-prev,
+.swiper:hover > .swiper-button-next
+{
+    background-color: hsla(var(--primary), 70%);
+}
+
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: auto;
+    pointer-events: none;
+}
+.swiper-button-prev.swiper-button-hidden,
+.swiper-button-next.swiper-button-hidden {
+    opacity: 0;
+    cursor: auto;
+    pointer-events: none;
+}
+.swiper-navigation-disabled .swiper-button-prev,
+.swiper-navigation-disabled .swiper-button-next {
+    display: none !important;
+}
+.swiper-button-prev svg,
+.swiper-button-next svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform-origin: center;
+}
+.swiper-rtl .swiper-button-prev svg,
+.swiper-rtl .swiper-button-next svg {
+    transform: rotate(180deg);
+}
+.swiper-button-prev,
+.swiper-rtl .swiper-button-next {
+    left: 0;
+    right: auto;
+}
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+    right: 0;
+    left: auto;
+}
+.swiper-button-lock {
+    display: none;
+}
+/* Navigation font start */
+.swiper-button-prev:after,
+.swiper-button-next:after {
+    font-size: var(--swiper-navigation-size);
+    text-transform: none !important;
+    letter-spacing: 0;
+    font-variant: initial;
+    line-height: 1;
+}
+.swiper-button-prev:after,
+.swiper-rtl .swiper-button-next:after {
+    content: 'prev';
+}
+.swiper-button-next,
+.swiper-rtl .swiper-button-prev {
+    right: 0;
+    left: auto;
+}
+.swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after {
+    content: 'next';
+}
+/* Navigation font end */

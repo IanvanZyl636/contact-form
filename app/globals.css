@@ -86,6 +86,12 @@
       padding: 0;
     }
 
+    .property-container-fluid{
+      max-width: 1038px;
+      width: 100%;
+      padding:0 24px;
+    }
+
     .wrapper-container-fluid{
       max-width: 1200px;
       width: 100%;
@@ -129,6 +135,6 @@
     }
 
     .primary-list-item:hover{
-      box-shadow: 0px -2px 4px #c1c1c1;
+      box-shadow: 0 -2px 4px #c1c1c1;
     }
   }

@@ -1,0 +1,32 @@
+.fullscreen {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: black;
+    transition: 0.5s ease-in;
+    z-index: 50;
+}
+
+.swiper-fullscreen{
+    background: black;
+    animation: fadeInFromNone 0.5s ease-in;
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}

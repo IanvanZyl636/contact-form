@@ -1,17 +1,17 @@
-enum PropertySorting {
+enum PropertySortingType {
     priceLowToHigh,
     priceHighToLow,
     mostRecent
 }
 
-const PropertySortingText: { [key in PropertySorting]: string } = {
-    [PropertySorting.priceLowToHigh]: 'Price - low to high',
-    [PropertySorting.priceHighToLow]: 'Price - high to low',
-    [PropertySorting.mostRecent]: 'Most Recent',
+const PropertySortingTypeText: { [key in PropertySortingType]: string } = {
+    [PropertySortingType.priceLowToHigh]: 'Price - low to high',
+    [PropertySortingType.priceHighToLow]: 'Price - high to low',
+    [PropertySortingType.mostRecent]: 'Most Recent',
 };
 
-export default PropertySorting;
+export default PropertySortingType;
 
 export {
-    PropertySortingText,
+    PropertySortingTypeText,
 }

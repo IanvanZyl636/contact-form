@@ -8,16 +8,11 @@ import TextParagraph from "@/components/ui/typography/text-paragraph";
 import LinesEllipsis from 'react-lines-ellipsis'
 import PropertyType, {PropertyTitleText} from "@/constants/property-type.constant";
 import {SuburbText, SuburbUrl} from "@/constants/suburb.constant";
-import iconBath from "@/public/property-feature-icons/icon_bath.svg";
-import iconBed from "@/public/property-feature-icons/icon_bed.svg";
-import iconParking from "@/public/property-feature-icons/icon_parking.svg";
-import iconErf from "@/public/property-feature-icons/icon_erf.svg";
-import iconFloor from "@/public/property-feature-icons/icon_floor.svg";
-import {cn} from '@/lib/utils';
 import Link from "next/link";
 import {SaleTypeUrl} from "@/constants/sale-type.constant";
 import {CityUrl} from "@/constants/city.constant";
 import {ProvinceUrl} from "@/constants/province.constant";
+import PropertyFeatureIcons from "@/app/property/components/property-feature-icons";
 
 export interface PropertyListProps {
     propertyList: Array<PropertyModel>;
@@ -35,45 +30,6 @@ export default function PropertyList({propertyList}: PropertyListProps) {
 
         }
     }
-
-    const PropertyFeatureIcon = ({icon, text, height = 20, width = 20, className}: {
-        icon: any,
-        height?: number,
-        width?: number,
-        text: string,
-        className?: string
-    }) => (
-        <div className={cn('flex flex-row gap-1 justify-items-center align-middle text-muted-foreground', className)}>
-            <Image height={height} width={width} style={{width: `${width}px`, height: `${height}px`}}
-                   className={'text-muted-foreground'} src={icon} alt={text}/>
-            <div>
-                {text}
-            </div>
-        </div>
-    );
-
-    const propertyFeatureIcons = (value: PropertyModel) => {
-        switch (value.propertyType) {
-            case PropertyType.apartmentOrFlat:
-            case PropertyType.townhouse:
-            case PropertyType.house:
-                return (
-                    <>
-                        <PropertyFeatureIcon icon={iconBed} text={value.bedroomAmount.toString()}/>
-                        <PropertyFeatureIcon icon={iconBath} text={value.bathroomAmount.toString()}/>
-                        <PropertyFeatureIcon icon={iconParking} text={value.garageAmount.toString()}/>
-                        <PropertyFeatureIcon icon={iconFloor} width={25} height={25}
-                                             text={`${value.floorSize.toString()} m²`}/>
-                        <PropertyFeatureIcon icon={iconErf} width={25} height={25}
-                                             text={`${value.erfSize.toString()} m²`}/>
-                    </>
-                )
-            default:
-                return (<PropertyFeatureIcon icon={iconErf} height={25} width={25}
-                                             text={`${value.erfSize.toString()} m²`}/>)
-
-        }
-    };
 
     return (
         <div className={'flex flex-col gap-6'}>
@@ -113,7 +69,7 @@ export default function PropertyList({propertyList}: PropertyListProps) {
                                         basedOn='words'
                                     />
                                     <div className={'shrink-0 flex flex-row gap-2'}>
-                                        {propertyFeatureIcons(value)}
+                                        <PropertyFeatureIcons property={value}/>
                                     </div>
                                 </div>
                             </div>

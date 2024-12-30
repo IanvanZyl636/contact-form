@@ -61,7 +61,7 @@ function getSearchParams(searchParams: ReadonlyURLSearchParams) {
         const value = entries[key];
 
         switch (true) {
-            case value.includes(','):
+            case value.includes(',') || key === 'propertyTypes':
                 (propertySearchParams[key] as string[]) = value.split(',');
                 break;
             case value === 'true':
@@ -92,11 +92,9 @@ const CheckBoxFilterContainer = ({children}: { children?: ReactNode }) => {
     )
 }
 
-export default function PropertyFilters() {
+export default function PropertyFilters({onValueChange}:{onValueChange?(value: PropertySearchParamsModel | undefined): void}) {
     const searchParams = useSearchParams();
-
     const propertySearchParams = getSearchParams(searchParams);
-
     const [filterParams, setFilterParams] = useState<PropertySearchParamsModel>(propertySearchParams);
 
     const moreFiltersInitialVal = [
@@ -115,6 +113,12 @@ export default function PropertyFilters() {
     const [moreFilters, setMoreFilters] = useState<boolean>(moreFiltersInitialVal);
 
     useSetQueryParams(filterParams);
+
+    useEffect(() => {
+        if(!onValueChange) return;
+
+        onValueChange(filterParams);
+    }, [filterParams, onValueChange]);
 
     return (
         <div className={'text-secondary-foreground py-2 flex flex-col'}>

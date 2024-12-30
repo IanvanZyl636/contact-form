@@ -8,7 +8,7 @@ export default function SaleTypeFilter({onValueChange, value}:{onValueChange?(va
     useEffect(()=> {
             (!value && onValueChange) ? onValueChange(SaleTypeText[SaleType.forSale]) : null;
         }
-        ,[onValueChange]);
+        ,[onValueChange, value]);
 
     return (
         <>

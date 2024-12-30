@@ -16,9 +16,16 @@ const SaleTypeUrl: { [key in SaleType]: string } = {
     [SaleType.developments]: 'developments'
 };
 
+const SaleTypeDescriptionText: { [key in SaleType]: string } = {
+    [SaleType.forSale]: 'for Sale',
+    [SaleType.toRent]: 'to Rent',
+    [SaleType.developments]: 'Development'
+};
+
 export default SaleType;
 
 export {
     SaleTypeText,
-    SaleTypeUrl
+    SaleTypeUrl,
+    SaleTypeDescriptionText
 }

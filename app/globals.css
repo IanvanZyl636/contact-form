@@ -137,4 +137,14 @@
     .primary-list-item:hover{
       box-shadow: 0 -2px 4px #c1c1c1;
     }
+
+    .card{
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.22);
+    }
+
+    ul{
+      margin: 1px;
+      padding:0 1rem;
+      list-style: inherit;
+    }
   }

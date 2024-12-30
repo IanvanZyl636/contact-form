@@ -25,8 +25,8 @@ export function ContactDrawerDialog() {
     const [open, setOpen] = React.useState(false);
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
-    const title = 'Leave us a message';
-    const description = 'Please enter your details below';
+    const title = '';
+    const description = '';
 
     if (isDesktop) {
         return (
@@ -36,9 +36,9 @@ export function ContactDrawerDialog() {
                 </DialogTrigger>
                 <DialogContent className="max-w-[370px] p-6">
                     <DialogHeader className={'gap-6 pb-6'}>
-                        <DialogTitle className={'text-center text-primary'}>{title}</DialogTitle>
+                        <DialogTitle className={'text-center text-primary'}>Leave us a message</DialogTitle>
                         <DialogDescription className={'text-center'}>
-                            {description}
+                            Please enter your details below
                         </DialogDescription>
                     </DialogHeader>
                     <div className={'flex flex-col gap-4'}>

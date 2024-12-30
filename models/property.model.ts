@@ -20,11 +20,8 @@ export default interface PropertyModel {
     hasPool:boolean;
     isInSecurityEstate:boolean;
     isPetFriendly:boolean;
+    estateType?:EstateType;
     propertyType:PropertyType;
     saleType:SaleType;
     location:LocationModel;
-}
-
-export interface DevelopmentModel extends PropertyModel{
-    estateType:EstateType;
 }

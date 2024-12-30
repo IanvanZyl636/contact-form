@@ -257,7 +257,7 @@ const propertyListData: Array<PropertyModel | DevelopmentModel> = [
             city: City.MEYERTON,
             province: Province.GT
         }
-    } as DevelopmentModel,
+    },
 ]
 
 export default propertyListData;

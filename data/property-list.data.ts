@@ -1,11 +1,12 @@
-import PropertyModel from "@/models/property.model";
+import PropertyModel, {DevelopmentModel} from "@/models/property.model";
 import PropertyType from "@/constants/property-type.constant";
 import SaleType from "@/constants/sale-type.constant";
 import Province from "@/constants/province.constant";
 import Suburb from "@/constants/suburb.constant";
 import City from "@/constants/city.constant";
+import EstateType from "@/constants/estate-type.constant";
 
-const propertyListData: Array<PropertyModel> = [
+const propertyListData: Array<PropertyModel | DevelopmentModel> = [
     {
         id: 'e249c1a7-2df4-44d7-817a-566708b46820',
         photos: [{
@@ -249,13 +250,14 @@ const propertyListData: Array<PropertyModel> = [
         isPetFriendly: true,
         propertyType: PropertyType.townhouse,
         saleType: SaleType.developments,
+        estateType: EstateType.riverView,
         location: {
             street: '33 Totius Street',
             suburb: Suburb.KOOKRUS,
             city: City.MEYERTON,
             province: Province.GT
         }
-    },
+    } as DevelopmentModel,
 ]
 
 export default propertyListData;

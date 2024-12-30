@@ -7,19 +7,19 @@ enum SaleType {
 const SaleTypeText: { [key in SaleType]: string } = {
     [SaleType.forSale]: 'For Sale',
     [SaleType.toRent]: 'To Rent',
-    [SaleType.developments]: 'Developments'
+    [SaleType.developments]: 'New Developments (Investments)'
 };
 
 const SaleTypeUrl: { [key in SaleType]: string } = {
     [SaleType.forSale]: 'for-sale',
     [SaleType.toRent]: 'to-rent',
-    [SaleType.developments]: 'developments'
+    [SaleType.developments]: 'investments'
 };
 
 const SaleTypeDescriptionText: { [key in SaleType]: string } = {
     [SaleType.forSale]: 'for Sale',
     [SaleType.toRent]: 'to Rent',
-    [SaleType.developments]: 'Development'
+    [SaleType.developments]: 'New Developments (Investments)'
 };
 
 export default SaleType;

@@ -186,8 +186,7 @@ const propertyListData: Array<PropertyModel> = [
                                     <li>Open Plan Kitchen with scullery</li>
                                 </ul>
                             </div>
-                            <div> Call me today for a viewing!</div>
-    `,
+                            <div> Call me today for a viewing!</div>`,
         price: 10500,
         bedroomAmount: 3,
         garageAmount: 2,
@@ -202,6 +201,54 @@ const propertyListData: Array<PropertyModel> = [
         isPetFriendly: true,
         propertyType: PropertyType.townhouse,
         saleType: SaleType.toRent,
+        location: {
+            street: '33 Totius Street',
+            suburb: Suburb.KOOKRUS,
+            city: City.MEYERTON,
+            province: Province.GT
+        }
+    },
+    {
+        id: '15cf2e56-f7fd-4191-ba3a-7dbe84093378',
+        photos: [{
+            isFeature: true,
+            url: "/property-photos/vacant-land/Culture-Grumpy-Cat-487386121.jpg"
+        }],
+        description: `<div>Looking for a place to call home with low maintenance and everything move-in ready?
+                                This
+                                one has just come on the market!
+                            </div>
+                            <div>The home offers you everything you need!</div>
+                            <div>
+                                Features:
+                                <ul>
+                                    <li>Three bedrooms with BIC and main has walk-in dressing</li>
+                                    <li>Two bathrooms with en being en-suite</li>
+                                    <li>Double Garage</li>
+                                    <li>8 solar panels</li>
+                                    <li>10kwh lithium battery system</li>
+                                    <li>SunSynk 8kwh inverter</li>
+                                    <li>Lapa with built-in braai</li>
+                                    <li>Security beams outside</li>
+                                    <li>Lounge</li>
+                                    <li>Open Plan Kitchen with scullery</li>
+                                </ul>
+                            </div>
+                            <div> Call me today for a viewing!</div>`,
+        price: 600000,
+        bedroomAmount: 3,
+        garageAmount: 2,
+        bathroomAmount: 2,
+        parkingSpaces: 2,
+        erfSize: 800,
+        floorSize: 156,
+        availabilityInMonths: 0,
+        hasGarden: true,
+        hasPool: false,
+        isInSecurityEstate: true,
+        isPetFriendly: true,
+        propertyType: PropertyType.townhouse,
+        saleType: SaleType.developments,
         location: {
             street: '33 Totius Street',
             suburb: Suburb.KOOKRUS,

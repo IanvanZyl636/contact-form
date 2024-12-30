@@ -1,6 +1,6 @@
 'use client'
 
-import PropertyModel from "@/models/property.model";
+import PropertyModel, {DevelopmentModel} from "@/models/property.model";
 import Image from 'next/image'
 import H3 from "@/components/ui/typography/h3";
 import currencyFormatter from "@/helpers/currency.helder";
@@ -9,39 +9,47 @@ import LinesEllipsis from 'react-lines-ellipsis'
 import PropertyType, {PropertyTitleText} from "@/constants/property-type.constant";
 import {SuburbText, SuburbUrl} from "@/constants/suburb.constant";
 import Link from "next/link";
-import {SaleTypeUrl} from "@/constants/sale-type.constant";
+import SaleType, {SaleTypeUrl} from "@/constants/sale-type.constant";
 import {CityUrl} from "@/constants/city.constant";
 import {ProvinceUrl} from "@/constants/province.constant";
 import PropertyFeatureIcons from "@/app/property/components/property-feature-icons";
+import {stripHtmlTags} from "@/helpers/strip-html-tags.helper";
+import {EstateTypeUrl} from "@/constants/estate-type.constant";
 
 export interface PropertyListProps {
     propertyList: Array<PropertyModel>;
 }
 
 export default function PropertyList({propertyList}: PropertyListProps) {
-    const title = (value: PropertyModel) => {
-        switch (value.propertyType) {
+    const title = (property: PropertyModel) => {
+        switch (property.propertyType) {
             case PropertyType.apartmentOrFlat:
             case PropertyType.townhouse:
             case PropertyType.house:
-                return `${value.bedroomAmount} Bedroom ${PropertyTitleText[value.propertyType]}`
+                return `${property.bedroomAmount} Bedroom ${PropertyTitleText[property.propertyType]}`
             default:
-                return `${PropertyTitleText[value.propertyType]}`;
+                return `${PropertyTitleText[property.propertyType]}`;
 
+        }
+    }
+
+    const generateUrl = (property: PropertyModel) => {
+        switch (property.saleType) {
+            case SaleType.developments:
+                return `/development/${EstateTypeUrl[(property as DevelopmentModel).estateType]}`
+            default:
+                return `/property/${SaleTypeUrl[property.saleType]}/${SuburbUrl[property.location.suburb]}/${CityUrl[property.location.city]}/${ProvinceUrl[property.location.province]}/${property.id}`;
         }
     }
 
     return (
         <div className={'flex flex-col gap-6'}>
             {
-
-
                 propertyList.map((value, index) => {
                     const firstImage = value.photos.length > 0 ? value.photos[0].url : '';
-                    const url = `/property/${SaleTypeUrl[value.saleType]}/${SuburbUrl[value.location.suburb]}/${CityUrl[value.location.city]}/${ProvinceUrl[value.location.province]}/${value.id}`;
 
                     return (
-                        <Link key={index} href={url}>
+                        <Link key={index} href={generateUrl(value)}>
                             <div
                                 className={'primary-list-item md:rounded-lg overflow-hidden flex flex-col md:flex-row cursor-pointer'}
                                 key={index}>
@@ -62,7 +70,7 @@ export default function PropertyList({propertyList}: PropertyListProps) {
                                         className={'shrink-0'}><b>{SuburbText[value.location.suburb]}</b></TextParagraph>
                                     <LinesEllipsis
                                         className={'text-muted-foreground'}
-                                        text={value.description}
+                                        text={stripHtmlTags(value.description)}
                                         maxLine='2'
                                         ellipsis='...'
                                         trimRight

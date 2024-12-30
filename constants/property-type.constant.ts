@@ -5,7 +5,7 @@ enum PropertyType {
     vacantLandOrPlot,
     farm,
     commercialProperty,
-    industrialProperty,
+    industrialProperty
 }
 
 const PropertyTypeText: { [key in PropertyType]: string } = {

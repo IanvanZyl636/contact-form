@@ -102,7 +102,7 @@
       }
     ],
     "description": "\n      Lovely modern townhouse in RiverView Estate with 24HR security.\n      \n\n\n      This townhouse offers a luxurious experience.It consists of 3 bedrooms, 2 bathrooms, open plan living room and kitchen with modern finishes and granite tops, automated double garage,\n      \n\n\n      Its convenient location ensures easy access to all amenities. 2 mins drive to Engen and Shell petrol station, 2 mins drive to Pierneef Boulevard shopping center, 3 mins drive to Corgi shopping center, 2 mins drive to Meyerton high/secondary school and 5 mins drive to Meyerton SAPS.\n    ",
-    "price": 10500,
+    "price": 600000,
     "bedroomAmount": 3,
     "garageAmount": 2,
     "bathroomAmount": 2,
@@ -116,6 +116,36 @@
     "isPetFriendly": true,
     "propertyType": 2,
     "saleType": 1,
+    "location": {
+      "street": "33 Totius Street",
+      "suburb": 0,
+      "city": 0,
+      "province": 2
+    }
+  },
+  {
+    "id": "15cf2e56-f7fd-4191-ba3a-7dbe84093378",
+    "photos": [
+      {
+        "isFeature": true,
+        "url": "/property-photos/vacant-land/Culture-Grumpy-Cat-487386121.jpg"
+      }
+    ],
+    "description": "\n      Lovely modern townhouse in RiverView Estate with 24HR security.\n      \n\n\n      This townhouse offers a luxurious experience.It consists of 3 bedrooms, 2 bathrooms, open plan living room and kitchen with modern finishes and granite tops, automated double garage,\n      \n\n\n      Its convenient location ensures easy access to all amenities. 2 mins drive to Engen and Shell petrol station, 2 mins drive to Pierneef Boulevard shopping center, 3 mins drive to Corgi shopping center, 2 mins drive to Meyerton high/secondary school and 5 mins drive to Meyerton SAPS.\n    ",
+    "price": 600000,
+    "bedroomAmount": 3,
+    "garageAmount": 2,
+    "bathroomAmount": 2,
+    "parkingSpaces": 2,
+    "erfSize": 800,
+    "floorSize": 156,
+    "availabilityInMonths": 0,
+    "hasGarden": true,
+    "hasPool": false,
+    "isInSecurityEstate": true,
+    "isPetFriendly": true,
+    "propertyType": 2,
+    "saleType": 2,
     "location": {
       "street": "33 Totius Street",
       "suburb": 0,

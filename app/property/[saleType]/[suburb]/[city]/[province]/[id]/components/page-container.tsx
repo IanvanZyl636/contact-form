@@ -65,8 +65,9 @@ export default function PageContainer({property}: PageContainerProps) {
                             Property overview
                             <div className={'flex flex-col'}>
                                 {propertyOverviewItems.filter((item) => item.show).map((propertyOverviewItem, index) => (
-                                    <div key={`property-overview-item${index}`} className={'flex flex-row'}>
-                                        <div className={'w-1/2'}><b>{propertyOverviewItem.keyText}:</b></div>
+                                    <div key={`property-overview-item${index}`}
+                                         className={'flex flex-row even:bg-accent p-1'}>
+                                        <div className={'w-1/2'}><b>{propertyOverviewItem.keyText}</b></div>
                                         <div className={'w-1/2'}>{propertyOverviewItem.valueText}</div>
                                     </div>))}
                             </div>
@@ -92,21 +93,24 @@ export default function PageContainer({property}: PageContainerProps) {
                             </div>
                         </div>
                     </div>
-                    <div className={'flex flex-col gap-4 w-1/3'}>
-                        <div className={'card md:rounded-lg p-4'}>
-                            <div className={'flex flex-col gap-4'}>
-                                <div
-                                    className={'text-3xl font-semibold leading-none tracking-tight text-center text-primary'}>
-                                    Enquire now
+                    <div className={'w-1/3 relative'}>
+                        <div className={'sticky-item flex flex-col gap-4'}>
+                            <div className={'card md:rounded-lg p-4'}>
+                                <div className={'flex flex-col gap-4'}>
+                                    <div
+                                        className={'text-3xl font-semibold leading-none tracking-tight text-center text-primary'}>
+                                        Enquire now
+                                    </div>
+                                    <div className={'text-sm text-muted-foreground text-center'}>Please enter your
+                                        details
+                                        below
+                                    </div>
+                                    <ContactForm/>
                                 </div>
-                                <div className={'text-sm text-muted-foreground text-center'}>Please enter your details
-                                    below
-                                </div>
-                                <ContactForm/>
                             </div>
-                        </div>
-                        <div className={'flex flex-col gap-2 p-4 card md:rounded-lg'}>
-                            map
+                            <div className={'flex flex-col gap-2 p-4 card md:rounded-lg'}>
+                                map
+                            </div>
                         </div>
                     </div>
                 </div>

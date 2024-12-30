@@ -2,6 +2,7 @@ import PropertyType from "@/constants/property-type.constant";
 import SaleType from "@/constants/sale-type.constant";
 import LocationModel from "@/models/location.model";
 import {PropertyPhotoModel} from "@/models/property-photo.model";
+import EstateType from "@/constants/estate-type.constant";
 
 export default interface PropertyModel {
     id:string;
@@ -22,4 +23,8 @@ export default interface PropertyModel {
     propertyType:PropertyType;
     saleType:SaleType;
     location:LocationModel;
+}
+
+export interface DevelopmentModel extends PropertyModel{
+    estateType:EstateType;
 }

@@ -17,20 +17,28 @@ const NavigationMenu = React.forwardRef<
     <NavigationMenuPrimitive.Root
         ref={ref}
         className={cn(
-            "z-50 bg-menu w-full",
+            "z-50 w-full",
             className
         )}
         {...props}
     >
         <div className={'container relative mx-auto '}>
-            <div className={'w-full flex flex-row justify-center items-center'}>
-                <div>
-                    {props.logo}
+            <div className={'w-full flex flex-row justify-center'}>
+                <div className={'relative'}>
+                    <div className={'h-full absolute top-0 right-12 bg-menu w-screen z-10'}></div>
+                    <div className={'relative z-20'}>
+                        {props.logo}
+                    </div>
                 </div>
-                <div className={'flex flex-row justify-center items-center grow'}>
-                    {children}
+                <div className={'grow flex flex-col justify-center relative'}>
+                    <div className={'h-full absolute top-0 -left-12 bg-menuSecondary w-screen z-10'}></div>
+                    <div className={'flex flex-row justify-center items-center relative z-20'}>
+                        <div className={'flex flex-row justify-center items-center grow'}>
+                            {children}
+                        </div>
+                        <ContactUsMenu/>
+                    </div>
                 </div>
-                <ContactUsMenu/>
             </div>
         </div>
     </NavigationMenuPrimitive.Root>
@@ -64,8 +72,9 @@ const NavigationMenuItem = React.forwardRef<
         {children}
     </NavigationMenuPrimitive.Item>
 ));
+NavigationMenuItem.displayName = NavigationMenuPrimitive.Item.displayName
 
-const navigationMenuTriggerStyle = (radius: string = 'rounded-md', className:string = 'bg-menu text-center text-menu-foreground data-[active]:bg-accent data-[state=open]:bg-accent data-[state=open]:text-accent-foreground data-[active]:text-accent-foreground') => cva(
+const navigationMenuTriggerStyle = (radius: string = 'rounded-md', className: string = 'bg-menuSecondary text-center text-menu-foreground data-[active]:bg-accent data-[state=open]:bg-accent data-[state=open]:text-accent-foreground data-[active]:text-accent-foreground') => cva(
     cn(MenuButtonStyle(radius), className)
 )();
 
@@ -95,7 +104,7 @@ const NavigationMenuContent = React.forwardRef<
         ref={ref}
         className={cn(
             "left-0 top-[110%] bo data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto",
-            "rounded-md bg-menu text-menu-foreground shadow",
+            "rounded-md bg-menuSecondary text-menu-foreground shadow",
             className
         )}
         {...props}

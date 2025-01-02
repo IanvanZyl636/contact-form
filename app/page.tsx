@@ -1,23 +1,18 @@
-import PageSection, {PageSectionProps} from "@/components/common/page-section/page-section";
-import WhatWeOfferGrid from "@/components/blocks/what-we-offer-grid";
-import Hero from "@/components/blocks/hero";
-import background from '@/public/space-hero.png';
-import ContactForm from "@/components/blocks/contact-form";
 
 export default function Home() {
-    const sectionName = 'section';
-
-    const sections: PageSectionProps[] = [
-        {children: <Hero/>, stickyBackground: {alt: "hero-section-background", src: background}},
-        {children: <WhatWeOfferGrid/>},
-        {children: <div className={'container'}><ContactForm/></div>},
-    ];
-
     return (
-        sections.map((section, i) => {
-            const sectionId = `${sectionName}${i}`;
+        <>
+            <div className={'page-section'}>
+                banner carousel<br/>
+                (Regency development group where your dreams can be built by us pic of Pa se huis se ingang)<br/>
+                (For sale background nice pic of one of the units)<br/>
+                (To rent background pic of hands giving over keys)<br/>
+                (Investment background arial pic of sandalwood)
+            </div>
+            <div className={'page-section bg-secondary'}>
 
-            return (<PageSection key={i} id={sectionId} {...section}></PageSection>)
-        })
+            </div>
+            <div className={'page-section'}></div>
+        </>
     );
 }

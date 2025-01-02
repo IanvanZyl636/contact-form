@@ -3,7 +3,6 @@
 import PropertyModel from "@/models/property.model";
 import {useState} from "react";
 import * as React from "react";
-import PhotoCarousel from "@/app/property/[saleType]/[suburb]/[city]/[province]/[id]/components/photo-carousel";
 import H2 from "@/components/ui/typography/h2";
 import currencyFormatter from "@/helpers/currency.helder";
 import {PropertyTitleText} from "@/constants/property-type.constant";
@@ -14,6 +13,7 @@ import PropertyFeatureIcons from "@/app/property/components/property-feature-ico
 import ContactForm from "@/components/blocks/contact-form";
 import Image from "next/image";
 import HtmlRender from "@/components/common/html-render/html-render";
+import PhotoCarousel from "@/components/common/image/photo-carousel";
 
 interface PageContainerProps {
     property: PropertyModel
@@ -37,7 +37,9 @@ export default function PageContainer({property}: PageContainerProps) {
 
     return (<div className={'property-container-fluid mx-auto flex flex-col gap-4 pb-4'}>
             <div>
-                <PhotoCarousel photoUrls={(property.photos.map((photo) => photo.url)) ?? []}
+                <PhotoCarousel
+                    className={'rounded-b-lg overflow-hidden'}
+                    photoUrls={(property.photos.map((photo) => photo.url)) ?? []}
                                fullScreenIndex={photoGallaryIndex} onFullScreenChange={(isFullScreen) => {
                     !isFullScreen ? setPhotoGallaryIndex(undefined) : null
                 }}></PhotoCarousel>

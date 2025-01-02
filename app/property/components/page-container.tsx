@@ -38,7 +38,6 @@ export default function PageContainer({propertyList}:{propertyList:PropertyModel
 }
 
 function useStatePropertyListFilter(propertyList: PropertyModel[], filterParams: PropertySearchParamsModel | undefined, ): [PropertyModel[], Dispatch<SetStateAction<PropertyModel[]>>]{
-    debugger;
     const [filteredPropertyList, setFilteredPropertyList] = useState<PropertyModel[]>(propertyList);
 
     useEffect(() => {

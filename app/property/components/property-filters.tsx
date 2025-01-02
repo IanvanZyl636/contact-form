@@ -120,6 +120,12 @@ export default function PropertyFilters({onValueChange}:{onValueChange?(value: P
         onValueChange(filterParams);
     }, [filterParams, onValueChange]);
 
+    useEffect(() => {
+        const propertySearchParams = getSearchParams(searchParams);
+
+        setFilterParams(propertySearchParams);
+    }, [searchParams]);
+
     return (
         <div className={'text-secondary-foreground py-2 flex flex-col'}>
             <div className={'flex flex-row flex-wrap -mx-2'}>

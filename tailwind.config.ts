@@ -57,6 +57,11 @@ const config = {
           DEFAULT: "hsl(var(--menu))",
           foreground: "hsl(var(--menu-foreground))",
           border: "hsla(var(--menu-border))",
+        },
+        menuSecondary: {
+          DEFAULT: "hsl(var(--menu-secondary))",
+          foreground: "hsl(var(--menu-secondary-foreground))",
+          border: "hsla(var(--menu-border))",
         }
       },
       borderRadius: {

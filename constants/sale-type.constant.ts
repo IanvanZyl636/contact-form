@@ -7,7 +7,7 @@ enum SaleType {
 const SaleTypeText: { [key in SaleType]: string } = {
     [SaleType.forSale]: 'For Sale',
     [SaleType.toRent]: 'To Rent',
-    [SaleType.developments]: 'New Developments (Investments)'
+    [SaleType.developments]: 'Investments'
 };
 
 const SaleTypeUrl: { [key in SaleType]: string } = {
@@ -19,7 +19,7 @@ const SaleTypeUrl: { [key in SaleType]: string } = {
 const SaleTypeDescriptionText: { [key in SaleType]: string } = {
     [SaleType.forSale]: 'for Sale',
     [SaleType.toRent]: 'to Rent',
-    [SaleType.developments]: 'New Developments (Investments)'
+    [SaleType.developments]: 'Investments'
 };
 
 export default SaleType;

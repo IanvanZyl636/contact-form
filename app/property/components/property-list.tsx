@@ -1,6 +1,6 @@
 'use client'
 
-import PropertyModel, {DevelopmentModel} from "@/models/property.model";
+import PropertyModel from "@/models/property.model";
 import Image from 'next/image'
 import H3 from "@/components/ui/typography/h3";
 import currencyFormatter from "@/helpers/currency.helder";
@@ -36,7 +36,9 @@ export default function PropertyList({propertyList}: PropertyListProps) {
     const generateUrl = (property: PropertyModel) => {
         switch (property.saleType) {
             case SaleType.developments:
-                return `/development/${EstateTypeUrl[(property as DevelopmentModel).estateType]}`
+                if(property.estateType === undefined) throw new Error("No estateType");
+
+                return `/investment/${EstateTypeUrl[property.estateType]}`
             default:
                 return `/property/${SaleTypeUrl[property.saleType]}/${SuburbUrl[property.location.suburb]}/${CityUrl[property.location.city]}/${ProvinceUrl[property.location.province]}/${property.id}`;
         }

@@ -4,7 +4,7 @@ import MobileMenu from "@/components/common/menu/components/mobile-menu/mobile-m
 import DesktopMenu from "@/components/common/menu/components/desktop-menu/desktop-menu";
 
 export default function Menu() {
-    const isDesktop = useMediaQuery("(min-width: 980px)");
+    const isDesktop = useMediaQuery("(min-width: 1040px)");
     return <>
         <div className={'menu-height'}></div>
         <div className={'fixed top-0 left-0 z-50 w-full menu-height border-menu-border'}>

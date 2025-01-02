@@ -6,20 +6,22 @@ import Image from 'next/image'
 import {A11y, Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import 'swiper/css';
-import '../css/swiper/navigation.css';
-import '../css/swiper/pagination.css';
-import '../css/swiper/swiper-container.css';
+import './css/swiper/navigation.css';
+import './css/swiper/pagination.css';
+import './css/swiper/swiper-container.css';
 
 import {useEffect, useRef, useState} from "react";
 import {cn} from "@/lib/utils";
 
 interface PhotoCarouselProps {
     photoUrls: string[];
+    fullScreenOnly?: boolean;
     fullScreenIndex?:number;
     onFullScreenChange?:(isFullScreen:boolean)=>void;
+    className?:string
 }
 
-export default function PhotoCarousel({photoUrls, fullScreenIndex, onFullScreenChange}: PhotoCarouselProps) {
+export default function PhotoCarousel({photoUrls, fullScreenIndex, onFullScreenChange, className, fullScreenOnly}: PhotoCarouselProps) {
     const swiperRef = useRef<SwiperClass | null>(null);
     const [fullScreen, setFullScreen] = useState(false);
 
@@ -37,7 +39,7 @@ export default function PhotoCarousel({photoUrls, fullScreenIndex, onFullScreenC
     }, [fullScreen, onFullScreenChange]);
 
     return (
-        <div className={fullScreen?'fullscreen':''}>
+        <div className={cn(className,fullScreen?'fullscreen':'', fullScreenOnly && !fullScreen?'hidden':'')}>
             <Swiper
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
                 className={fullScreen?'h-full w-full swiper-fullscreen':'normal'}

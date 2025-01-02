@@ -13,7 +13,7 @@
       --card-foreground: 0 0% 3.9%;
       --popover: 0 0% 100%;
       --popover-foreground: 0 0% 3.9%;
-      --primary: 260, 73%, 14%;
+      --primary: 180, 4.3%, 4.5%;
       --primary-foreground: 0, 0%, 100%;
       --secondary: 0 0% 88%;
       --secondary-foreground: 0 0% 9%;
@@ -23,9 +23,11 @@
       --accent-foreground: 0 0% 9%;
       --destructive: 0 84.2% 60.2%;
       --destructive-foreground: 0 0% 98%;
-      --menu:260, 73%, 14%;
+      --menu:180, 4.3%, 4.5%;
       --menu-foreground:0 0% 100%;
       --menu-border:260, 73%, 14%, 1;
+      --menu-secondary:223, 6.7%, 20.6%;
+      --menu-secondary-foreground:0 0% 100%;
       --border: 0 0% 89.8%;
       --input: 0 0% 89.8%;
       --ring: 0 0% 3.9%;
@@ -151,5 +153,64 @@
     .sticky-item{
       position:sticky;
       top:calc(var(--menu-height) + 1rem);
+    }
+
+    .responsive-video {
+      position: relative;
+      padding-bottom: var(--section-height);
+      height: 0;
+      overflow: hidden;
+      background: black;
+    }
+
+    .responsive-video iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: none;
+    }
+
+    .background-text-right{
+      background: linear-gradient(270deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 65%);
+    }
+
+    .background-text-left{
+      background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 65%);
+    }
+
+    .background-text-center{
+      background:rgba(255,255,255,0.80);
+    }
+
+    .aspect-ratio-16-9{
+      padding-bottom: 56.3637%;
+    }
+
+    table{
+      border-collapse: collapse;
+    }
+
+    td {
+      border: 2px solid hsl(var(--accent));
+      padding: 1rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    table>thead>tr{
+      background:hsl(var(--primary));
+      color:hsl(var(--primary-foreground));
+      font-weight:bold;
+    }
+
+    table>thead>tr>th{
+      padding: 1rem;
+    }
+
+    .ul-gap-2>li{
+      margin-bottom: 0.5rem;
     }
   }

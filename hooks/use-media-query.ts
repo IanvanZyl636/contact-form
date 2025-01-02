@@ -1,10 +1,10 @@
-"use client"
-import * as React from "react"
+'use client'
+import {useEffect, useState} from "react";
 
 export function useMediaQuery(query: string) {
-    const [value, setValue] = React.useState<boolean | undefined>(undefined);
+    const [value, setValue] = useState<boolean | undefined>(undefined);
 
-    React.useEffect(() => {
+    useEffect(() => {
         function onChange(event: MediaQueryListEvent) {
             setValue(event.matches)
         }

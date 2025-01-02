@@ -9,7 +9,7 @@ export default function ContactUsMenu() {
             <a className={'leading-4'} href={`tel:${phoneNumber}`}>
                 <Button size={'custom'} variant={'custom'}
                         className={'rounded-full bg-menu-foreground border-menu-foreground border-2 group'}>
-                    <div className={'p-2 rounded-full bg-menu text-menu-foreground z-10'}>
+                    <div className={'p-2 rounded-full bg-menuSecondary text-menu-foreground z-10'}>
                         <Phone className={'h-6 w-6'}/>
                     </div>
                     <div

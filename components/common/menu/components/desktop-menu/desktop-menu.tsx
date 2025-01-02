@@ -21,24 +21,29 @@ export default function DesktopMenu({className}: {className?: string}) {
             </NavigationMenuItem>
             <NavigationMenuItem>
                 <NavigationMenuTrigger>
-                    Services
+                    Properties
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                    <Link href="/" legacyBehavior passHref>
+                    <Link href="/property?saleType=For+Sale" legacyBehavior passHref>
                         <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full')}>
-                            Accounting
+                            For Sale
                         </NavigationMenuLink>
                     </Link>
-                    <Link href="/" legacyBehavior passHref>
+                    <Link href="/property?saleType=To+Rent" legacyBehavior passHref>
                         <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full text-nowrap')}>
-                            Register a Company
+                            To Rent
+                        </NavigationMenuLink>
+                    </Link>
+                    <Link href="/property?saleType=Investments" legacyBehavior passHref>
+                        <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'w-full text-nowrap')}>
+                            Investments
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuContent>
             </NavigationMenuItem>
-            <Link href="/" legacyBehavior passHref>
+            <Link href="/investment/river-view" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    How it works
+                    Latest Investment
                 </NavigationMenuLink>
             </Link>
             <Link href="/" legacyBehavior passHref>

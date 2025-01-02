@@ -5,8 +5,6 @@
     background-color: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
     padding:0.65rem 0.75rem;
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
     user-select: none;
 }
 
